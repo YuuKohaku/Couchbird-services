@@ -6,7 +6,7 @@ var Couchbase = require("couchbase");
 var Error = require("../Error");
 var DB_Bucket = require("./DB_Bucket");
 var Promise = require("bluebird");
-var config = require("../Consts/config");
+var config = require("../const/config");
 var _ = require("lodash");
 
 function DB_Face(params) {

@@ -1,2 +1,3 @@
 # Couchbird
-Promisifying proxy for Couchbase Node.js driver.
+
+Database worker.

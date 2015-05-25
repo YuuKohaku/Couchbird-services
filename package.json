@@ -1,0 +1,34 @@
+{
+    "name": "Couchbird",
+    "version": "0.0.1",
+    "description": "database worker service",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sdk-group/Couchbird.git"
+    },
+    "author": "V.",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/sdk-group/Couchbird/issues"
+    },
+    "homepage": "https://github.com/sdk-group/Couchbird",
+    "dependencies": {
+        "bluebird": "^2.9.24",
+        "eventemitter2": "^0.4.14",
+        "lodash": "^3.7.0",
+        "wascally": "^0.2.4",
+        "custom-queue": "https://github.com/artificial-life/custom-queue"
+    },
+    "devDependencies": {
+        "gulp": "^3.8.11",
+        "gulp-babel": "^5.1.0",
+        "gulp-concat": "^2.5.2",
+        "gulp-sourcemaps": "^1.5.2",
+        "gulp-watch": "^4.2.4",
+        "harmonize": "^1.4.2"
+    }
+}
