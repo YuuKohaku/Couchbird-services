@@ -1,3 +1,4 @@
+require("harmonize")();
 var gulp = require("gulp");
 var sourcemaps = require("gulp-sourcemaps");
 var babel = require("gulp-babel");
@@ -6,16 +7,30 @@ var watch = require('gulp-watch');
 
 
 gulp.task("default", function () {
-    return gulp.src("src/**/*.js")
+    return gulp.src(["src/**/*.js", "samples/**/*.js"])
         .pipe(babel({
             blacklist: ['bluebirdCoroutines', 'regenerator']
         }))
         .pipe(gulp.dest("build")).on('end', function () {
-            require('./build/example.js');
+            require('./build/replicator');
             setTimeout(function () {
                 console.log('timeout');
                 process.exit()
-            }, 10000);
+            }, 30000);
+        });
+});
+
+gulp.task("facehug", function () {
+    return gulp.src(["src/**/*.js", "samples/**/*.js"])
+        .pipe(babel({
+            blacklist: ['bluebirdCoroutines', 'regenerator']
+        }))
+        .pipe(gulp.dest("build")).on('end', function () {
+            require('./build/facehug');
+            setTimeout(function () {
+                console.log('timeout');
+                process.exit()
+            }, 30000);
         });
 });
 

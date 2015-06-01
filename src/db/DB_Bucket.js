@@ -2,7 +2,7 @@
 //DB promisifying proto
 
 var Couchbase = require("couchbase");
-var Error = require("../Error");
+var Error = require("../Error/CBError");
 var Promise = require("bluebird");
 
 var DB_Bucket = function (cluster, bucket_name, params) {
@@ -56,6 +56,7 @@ DB_Bucket.prototype.upsert = function (key, value, options) {
 };
 
 DB_Bucket.prototype.get = function (key, options) {
+    console.log(arguments);
     return this._promisifyMethod(this._bucket.get)
         .apply(this._bucket, arguments);
 };

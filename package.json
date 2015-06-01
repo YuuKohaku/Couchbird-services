@@ -18,10 +18,11 @@
     "homepage": "https://github.com/sdk-group/Couchbird",
     "dependencies": {
         "bluebird": "^2.9.24",
-        "eventemitter2": "^0.4.14",
+        "custom-queue": "https://github.com/artificial-life/custom-queue",
         "lodash": "^3.7.0",
         "wascally": "^0.2.4",
-        "custom-queue": "https://github.com/artificial-life/custom-queue"
+        "request": "^2.55.0",
+        "validator": "^3.40.0"
     },
     "devDependencies": {
         "gulp": "^3.8.11",

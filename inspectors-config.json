@@ -1,0 +1,22 @@
+{
+    "desription": "temp config for network physician",
+    "inspectors": [
+        {
+            "name": "ping",
+            "params": {
+                "ip": ["192.168.43.74", "ya.ru", "192.168.42.74"],
+                "less_then": 1000,
+                "interval": 3000
+            }
+        },
+        {
+            "name": "badboy",
+            "params": {
+                "permission_to_slay": "ip",
+                "key_data": "ya.ru",
+                "execution_time": 10000,
+                "revive_time": 15000
+            }
+        }
+        ]
+}

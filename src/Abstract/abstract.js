@@ -1,9 +1,12 @@
 'use strict'
 
 var Promise = require('bluebird');
+var _ = require('lodash');
+
+var getEvents = require('../const/events.js');
+var PermissionLogic = require('./permission-logic.js');
 
 /*utility function*/
-var getEvents = require('../const/events.js');
 
 var modules = [];
 var getPermissionModel = function (module_name) {
@@ -22,9 +25,8 @@ var getPermissionModel = function (module_name) {
  */
 class Abstrasct_Service {
     constructor({
-        event_group: event_group
+        event_group = ''
     }) {
-        this.paused = true;
 
         this.event_names = event_group ? this.getEvents(event_group) : {};
         this.queues_required = {
@@ -32,22 +34,51 @@ class Abstrasct_Service {
             "task-queue": false
         };
 
-        this.required_permissions = [];
+        this.state('created');
+        this.required_permissions = new PermissionLogic();
+    }
+    state(name) {
+        if (!name) return this.state_id;
+
+        this.state_id = name.toLowerCase();
+
+        switch (this.state_id) {
+        case 'created':
+            break;
+        case 'init':
+            break;
+        case 'waiting':
+            break;
+        case 'working':
+            break;
+        case 'paused':
+            break;
+        default:
+            throw new Error('unknown state');
+            break;
+        }
+
+        return this;
     }
     getEvents(event_group) {
         return getEvents(event_group);
     }
     addPermission(name, params) {
-        var model = getPermissionModel(name);
-        var permission = new model(params);
-        this.required_permissions.push(permission);
-
-        return this;
+        this.required_permissions.add(name, params);
     }
-    requestPermission() {
-        if (!this.required_permissions.length) return
-        var p = new Promise().resolve(true);
-        return p;
+
+    tryToStart() {
+        this.required_permissions.request().then((result) => {
+            this.state('waiting');
+
+            if (result === true) {
+                console.log('Abstract: can start now');
+                this.start();
+            } else {
+                console.log('Abstract: some permissions dropped, start is delayed');
+            }
+        }).catch(() => console.log('couldnt get permissions for servcise,everything is realy bad'));
+
     }
     setChannels(options) {
         if (!options.hasOwnProperty('queue')) {
@@ -66,11 +97,11 @@ class Abstrasct_Service {
 
         }
 
-        //@TODO: this should be much better. If EQ and TQ specified they should be combined in complex emitter
+        this.required_permissions.setChannels(options)
 
+        //@TODO: this should be much better. If EQ and TQ specified they should be combined in complex emitter
         this.emitter = options.queue || options['event-queue'] || options['task-queue'];
 
-        return this;
     }
 
     init(config) {
@@ -80,29 +111,47 @@ class Abstrasct_Service {
             return Promise.reject('U should set channels before');
         }
 
+        this.required_permissions.dropped(() => {
+            if (this.state() === 'working') {
+                console.log('Abstract : oh no, so bad');
+                this.pause();
+                this.state('waiting');
+            }
+        });
+
+        this.required_permissions.restored(() => {
+            if (this.state() === 'waiting') {
+                this.start();
+                console.log('Abstract : excelent...');
+            }
+        });
+
+        this.state('init');
+
         return Promise.resolve(true);
     }
 
     start() {
         //@TODO: What should it do in current context?
         //@TODO: requesPermissions() here
+        if (this.state() === 'working') throw new Error('Running already!');
 
-        this.paused = false;
+        this.state('working');
 
         return this;
     }
 
     pause() {
         //@TODO: What should it do in current context?
-        this.paused = true;
+        this.state('paused');
 
         return this;
     }
 
     resume() {
         //@TODO: What should it do in current context?
-        this.paused = false;
-
+        //this.state('waiting');
+        //set waiting, call permissions, get 
         return this;
     }
 }

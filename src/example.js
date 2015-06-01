@@ -1,56 +1,83 @@
 'use strict'
 
-var Promise = require('bluebird');
-var EventEmitter2 = require('eventemitter2').EventEmitter2;
+/* test */
 
-var Facehugger = require('./DBWorker/facehugger');
+var iconfig = require('../inspectors-config.json');
+var Promise = require('bluebird');
+
+/* services */
+
+var Doctor = require('./Physician/physician.js');
+var Auth = require('./Auth/auth.js');
+var MessageHub = require('./MessageHub/messagehub.js');
+var Sample = require('./SampleService/sampleservice.js');
+
 var Queue = require('custom-queue');
 
-var config = require('./const/config');
+var doctor = new Doctor();
+var auth = new Auth();
+var sample = new Sample();
+var hub = new MessageHub();
+//var ee = new EventEmitter2({
+//    wildcard: false,
+//    newListener: false,
+//    maxListeners: 10
+//});
 
-var alien = new Facehugger();
+var ee = new Queue();
 
-var ee = new EventEmitter2({
-    wildcard: false,
-    newListener: false,
-    maxListeners: 10
+doctor.setChannels({
+    "event-queue": ee
 });
 
-//var ee = new Queue();
+auth.setChannels({
+    "queue": ee
+});
 
-alien.setChannels({
+hub.setChannels({
+    "queue": ee
+});
+
+sample.setChannels({
     "queue": ee
 });
 
 Promise.props({
-    alien: alien.init({
-        bucket_name: config.db.bucket_name
-    })
+    auth: auth.init(),
+    doctor: doctor.init(iconfig),
+    sample: sample.init(),
+    hub: hub.init({
+        port: 3000
+    }),
 }).then(function () {
-    alien.start();
+    auth.tryToStart();
+    doctor.tryToStart();
+    sample.tryToStart();
+    hub.tryToStart();
 });
 
-ee.on('dbface.request', (args) => {
-    alien.handle_request(args)
-        .then((res) => {
-            ee.emit('dbface.response', res);
-        })
-        .catch((err) => {
-            ee.emit('dbface.response', err);
-        });
-});
+/* this will be cooler next time */
 
-ee.on('dbface.response', (data) => {
-    console.log("DB responded with: ", data);
-});
+ee.on('permission.dropped', d => console.log(d));
+ee.on('permission.restored', d => console.log('restored:', d));
 
-var tm = setInterval(() => {
-    ee.emit('dbface.request', {
-        action: "get",
-        params: {}
-    });
-}, 1000);
+/*Test part, ya.ru should be always up*/
 
-process.on("exit", (code) => {
-    clearInterval(tm);
-})
+/*
+setTimeout(function () {
+    check();
+}, 4000);
+
+var Ip_Model = require('./Model/Permission/ip.js');
+
+
+var check = function () {
+    ee.addTask('permission.request', [
+        new Ip_Model('ya.ru').requestMessage(),
+        new Ip_Model('127.1.1.1').requestMessage(),
+        new Ip_Model('192.168.43.74').requestMessage()
+    ]).then(v => console.log(v));
+};
+
+check();
+*/

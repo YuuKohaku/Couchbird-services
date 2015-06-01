@@ -4,5 +4,6 @@ module.exports = {
     ABSTRACT_METHOD: "This method should be implemented for subclasses",
     DATABASE_ERROR: "Internal database error",
     INVALID_ARGUMENT: "Invalid argument specified",
-    MISSING_METHOD: "No such method"
+    MISSING_METHOD: "No such method",
+    CONFIGURATION: "Configuration error"
 }

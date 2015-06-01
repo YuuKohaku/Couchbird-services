@@ -3,7 +3,7 @@
 //all the data function now belong to DB_Bucket
 
 var Couchbase = require("couchbase");
-var Error = require("../Error");
+var Error = require("../Error/CBError");
 var DB_Bucket = require("./DB_Bucket");
 var Promise = require("bluebird");
 var config = require("../const/config");
