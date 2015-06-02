@@ -1,3 +1,2 @@
-# Couchbird
 
-Database worker.
+Services mix intended to work with couchbird.
