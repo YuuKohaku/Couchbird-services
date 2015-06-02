@@ -5,7 +5,6 @@ var qs = require("querystring");
 var request = Promise.promisify(require("request"));
 
 var Abstract = require('../Abstract/abstract.js');
-var DB_Face = require("../db/DB_Face");
 var Error = require("../Error/ReplicatorError");
 var Constellation = require("./hosts/constellation");
 

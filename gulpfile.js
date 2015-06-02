@@ -34,22 +34,16 @@ gulp.task("facehug", function () {
         });
 });
 
-gulp.task('es6', function () {
-    return gulp.src("src/**/*.js")
+gulp.task("booker", function () {
+    return gulp.src(["src/**/*.js", "samples/**/*.js"])
         .pipe(babel({
             blacklist: ['bluebirdCoroutines', 'regenerator']
         }))
-        .pipe(gulp.dest("build"));
-});
-
-
-
-gulp.task("sm", function () {
-    return gulp.src("src/**/*.js")
-        .pipe(sourcemaps.init())
-        .pipe(babel({
-            blacklist: ['bluebirdCoroutines', 'regenerator']
-        }))
-        .pipe(sourcemaps.write("./maps"))
-        .pipe(gulp.dest("build"));
+        .pipe(gulp.dest("build")).on('end', function () {
+            require('./build/booker');
+            setTimeout(function () {
+                console.log('timeout');
+                process.exit()
+            }, 20000);
+        });
 });

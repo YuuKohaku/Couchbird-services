@@ -2,8 +2,10 @@
 var Promise = require('bluebird');
 var Abstract = require('../Abstract/abstract.js');
 var _ = require("lodash");
-var DB_Face = require("../db/DB_Face");
+var Couchbird = require("Couchbird");
 var Error = require("../Error/CBError");
+
+var DB_Face = null;
 
 class Facehugger extends Abstract {
     constructor() {
@@ -30,9 +32,17 @@ class Facehugger extends Abstract {
         }
 
         var opts = {
+            server_ip: "127.0.0.1",
+            n1ql: "127.0.0.1:8093",
             bucket_name: "default"
         };
         _.assign(opts, config);
+
+        DB_Face = Couchbird({
+            server_ip: opts.server_ip,
+            n1ql: opts.n1ql
+        });
+
         this._db = DB_Face.bucket(opts.bucket_name);
         this.exposed_api = _.chain(this._db)
             .functions()

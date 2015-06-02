@@ -23,11 +23,13 @@ alien.setChannels({
     "queue": ee
 });
 
-ee.listenTask('dbface.request', d => console.log("REQUEST", d));
+//ee.listenTask('dbface.request', d => console.log("REQUEST", d));
 ee.listenTask('dbface.response', d => console.log("RESPONSE", d));
 
 Promise.props({
         alien: alien.init({
+            server_ip: config.db.server_ip,
+            n1ql: config.db.n1ql,
             bucket_name: config.db.bucket_name
         })
     }).then(function () {
@@ -66,12 +68,16 @@ Promise.props({
                 id: "101"
             }
         ];
-
-        _.forEach(fn_to_check, function (evdata, n) {
-            ee.addTask('dbface.request', evdata);
+        var check = Promise.coroutine(function* () {
+            for (var i in fn_to_check) {
+                var evdata = fn_to_check[i];
+                console.log("Emitting request with data :", evdata);
+                yield Promise.delay(1000);
+                ee.addTask('dbface.request', evdata);
+            }
         });
+        check();
     });
-
 
 //ee.on('dbface.request', (args) => {
 //    alien.handle_request(args)
