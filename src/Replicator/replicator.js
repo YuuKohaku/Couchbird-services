@@ -204,10 +204,7 @@ class Replicator extends Abstract {
             }
         ];
         _.forEach(tasks, (task) => {
-            this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data)
-                .then((res) => {
-                    console.log("Replicator: ", res);
-                }));
+            this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
         });
 
         return Promise.resolve(true);
