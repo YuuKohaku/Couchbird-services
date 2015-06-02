@@ -145,7 +145,7 @@ class Replicator extends Abstract {
         });
 
         this.queues_required = {
-            "event-queue": true,
+            "event-queue": false,
             "task-queue": true
         };
         this.hosts = new Constellation();
@@ -204,7 +204,10 @@ class Replicator extends Abstract {
             }
         ];
         _.forEach(tasks, (task) => {
-            this.emitter.listenTask(task.name, data => task.handler(data));
+            this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data)
+                .then((res) => {
+                    console.log("Replicator: ", res);
+                }));
         });
 
         return Promise.resolve(true);

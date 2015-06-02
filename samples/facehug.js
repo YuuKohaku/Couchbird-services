@@ -23,6 +23,7 @@ alien.setChannels({
     "queue": ee
 });
 
+ee.listenTask('dbface.request', d => console.log("REQUEST", d));
 ee.listenTask('dbface.response', d => console.log("RESPONSE", d));
 
 Promise.props({

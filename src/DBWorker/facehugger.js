@@ -79,7 +79,6 @@ class Facehugger extends Abstract {
         params: args,
         id: mid
     }) {
-        console.log(actname, args, mid, this.event_names);
 
         return new Promise((resolve, reject) => {
                 if (!actname || !~_.indexOf(this.exposed_api, actname))

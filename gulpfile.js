@@ -12,7 +12,7 @@ gulp.task("default", function () {
             blacklist: ['bluebirdCoroutines', 'regenerator']
         }))
         .pipe(gulp.dest("build")).on('end', function () {
-            require('./build/replicator');
+            require('./build/replicator-events');
             setTimeout(function () {
                 console.log('timeout');
                 process.exit()
@@ -30,7 +30,7 @@ gulp.task("facehug", function () {
             setTimeout(function () {
                 console.log('timeout');
                 process.exit()
-            }, 30000);
+            }, 50000);
         });
 });
 
