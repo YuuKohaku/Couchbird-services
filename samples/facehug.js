@@ -73,7 +73,13 @@ Promise.props({
                 var evdata = fn_to_check[i];
                 console.log("Emitting request with data :", evdata);
                 yield Promise.delay(1000);
-                ee.addTask('dbface.request', evdata);
+                ee.addTask('dbface.request', evdata)
+                    .then((res) => {
+                        console.log("RES", res);
+                    })
+                    .catch((err) => {
+                        console.log("ERR", err.message)
+                    });
             }
         });
         check();

@@ -28,7 +28,7 @@ class Facehugger extends Abstract {
     init(config) {
         this.config = config || {};
         if (!this.emitter && (this.queues_required['event-queue'] || this.queues_required['task-queue'])) {
-            return Promise.reject('U should set channels before');
+            return Promise.reject(new Error("SERVICE_ERROR", 'U should set channels before'));
         }
 
         var opts = {
@@ -91,26 +91,26 @@ class Facehugger extends Abstract {
     }) {
 
         return new Promise((resolve, reject) => {
-                if (!actname || !~_.indexOf(this.exposed_api, actname))
-                    return reject(new Error("MISSING_METHOD"));
-                //Still doesn't feel secure enough
-                return resolve(this._db[actname].apply(this._db, args));
-            })
-            .then((res) => {
-                this.emitter.addTask(this.event_names.response, {
-                    response: res,
-                    id: mid
-                });
-                return Promise.resolve(res);
-            })
-            .catch((err) => {
-                this.emitter.addTask(this.event_names.response, {
-                    response: err.message,
-                    id: mid
-                });
-                return Promise.resolve(false);
-
-            });
+            if (!actname || !~_.indexOf(this.exposed_api, actname))
+                return reject(new Error("MISSING_METHOD"));
+            //Still doesn't feel secure enough
+            return resolve(this._db[actname].apply(this._db, args));
+        });
+        //            .then((res) => {
+        //                this.emitter.addTask(this.event_names.response, {
+        //                    response: res,
+        //                    id: mid
+        //                });
+        //                return Promise.resolve(res);
+        //            })
+        //            .catch((err) => {
+        //                this.emitter.addTask(this.event_names.response, {
+        //                    response: err.message,
+        //                    id: mid
+        //                });
+        //                return Promise.resolve(false);
+        //
+        //            });
     }
 }
 

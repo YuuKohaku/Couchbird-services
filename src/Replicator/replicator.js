@@ -160,7 +160,7 @@ class Replicator extends Abstract {
     init(config) {
         this.config = config || {};
         if (!this.emitter && (this.queues_required['event-queue'] || this.queues_required['task-queue'])) {
-            return Promise.reject('U should set channels before');
+            return Promise.reject(new Error("SERVICE_ERROR", 'U should set channels before'));
         }
 
         var events = this.getEvents('replication');
@@ -243,7 +243,7 @@ class Replicator extends Abstract {
     }) {
         var src = this.hosts.show(shost);
         if (!src) {
-            return Promise.reject(new Error("CONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
         var key = [shost, sb, dhost, db].join(":");
         return new Promise((resolve, reject) => {
@@ -267,7 +267,7 @@ class Replicator extends Abstract {
     }) {
         var src = this.hosts.show(shost);
         if (!src) {
-            return Promise.reject(new Error("CONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
 
         return create_replication(src.ip, sb, dhost, db, src.usr, src.pwd)
@@ -287,7 +287,7 @@ class Replicator extends Abstract {
     }) {
         var src = this.hosts.show(shost);
         if (!src) {
-            return Promise.reject(new Error("CONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
         var key = [shost, sb, dhost, db].join(":");
         return new Promise((resolve, reject) => {
@@ -311,7 +311,7 @@ class Replicator extends Abstract {
     }) {
         var src = this.hosts.show(shost);
         if (!src) {
-            return Promise.reject(new Error("CONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
 
         var key = [shost, sb, dhost, db].join(":");
@@ -335,7 +335,7 @@ class Replicator extends Abstract {
     }) {
         var src = this.hosts.show(shost);
         if (!src) {
-            return Promise.reject(new Error("CONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
 
         var key = [shost, sb, dhost, db].join(":");

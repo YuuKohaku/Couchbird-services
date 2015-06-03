@@ -5,5 +5,6 @@ module.exports = {
     DATABASE_ERROR: "Internal database error",
     INVALID_ARGUMENT: "Invalid argument specified",
     MISSING_METHOD: "No such method",
-    CONFIGURATION: "Configuration error"
+    MISCONFIGURATION: "Configuration error",
+    SERVICE_ERROR: "Inner service error"
 }

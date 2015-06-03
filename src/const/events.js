@@ -11,6 +11,8 @@ var events = {
         response: 'dbface.response'
 
     },
+    booker: {},
+    arbiter: {},
     replication: {
         create: function (way) {
             return 'replication.create.' + way;
