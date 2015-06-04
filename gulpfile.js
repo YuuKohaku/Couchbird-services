@@ -12,6 +12,20 @@ gulp.task("default", function () {
             blacklist: ['bluebirdCoroutines', 'regenerator']
         }))
         .pipe(gulp.dest("build")).on('end', function () {
+            require('./build/broker');
+            setTimeout(function () {
+                console.log('timeout');
+                process.exit()
+            }, 30000);
+        });
+});
+
+gulp.task("replicator", function () {
+    return gulp.src(["src/**/*.js", "samples/**/*.js"])
+        .pipe(babel({
+            blacklist: ['bluebirdCoroutines', 'regenerator']
+        }))
+        .pipe(gulp.dest("build")).on('end', function () {
             require('./build/replicator-events');
             setTimeout(function () {
                 console.log('timeout');

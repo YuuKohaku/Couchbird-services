@@ -10,8 +10,8 @@ var Queue = require('custom-queue');
 var rep = new Replicator();
 var ee = new Queue();
 
-rep.hosts.add("lunar", "192.168.1.6", "Administrator:456789");
-rep.hosts.add("basilisk", "192.168.1.2", "Administrator:123456");
+rep.hosts.add("lunar", "192.168.1.4", "Administrator:456789");
+rep.hosts.add("basilisk", "192.168.1.3", "Administrator:123456");
 //console.log(rep.hosts.show("lunar"), rep.hosts.show("basilisk"));
 
 rep.setChannels({
@@ -46,7 +46,9 @@ Promise.props({
                 var name = fn_to_check[i];
                 console.log("Emitting ", name, "with data :", data);
                 yield Promise.delay(3000);
-                ee.addTask(name, data);
+                ee.addTask(name, data).then((res) => {
+                    console.log("RESPONSE", res);
+                });
             }
         });
         check();

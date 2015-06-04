@@ -2,7 +2,7 @@
 var path = require("path");
 
 module.exports = {
-    name: "replica",
+    name: "main",
     base_dir: path.resolve(),
     model_dir: path.resolve("Model"),
     strategies_dir: path.resolve("Strategy"),

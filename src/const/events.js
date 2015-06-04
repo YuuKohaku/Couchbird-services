@@ -11,7 +11,12 @@ var events = {
         response: 'dbface.response'
 
     },
-    booker: {},
+    booker: {
+        request: "booker.request"
+    },
+    broker: {
+        resources: "broker.list.resources"
+    },
     arbiter: {},
     replication: {
         create: function (way) {

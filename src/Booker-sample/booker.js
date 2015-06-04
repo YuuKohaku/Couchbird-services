@@ -1,6 +1,9 @@
 'use strict'
 
 var Abstract = require('../Abstract/abstract.js');
+var _ = require("lodash");
+var Error = require("../Error/CBError");
+var Promise = require("bluebird");
 
 class Booker extends Abstract {
     constructor() {
@@ -24,16 +27,17 @@ class Booker extends Abstract {
     init(config) {
         this.config = config || {};
         if (!this.emitter && (this.queues_required['event-queue'] || this.queues_required['task-queue'])) {
-            return Promise.reject('U should set channels before');
+            return Promise.reject(new Error("SERVICE_ERROR", 'U should set channels before'));
         }
 
-        var events = this.getEvents('replication');
-        var ways = {
-            one: 'direct',
-            two: 'bidirect'
-        };
-        var tasks = [
+        this.meta_tree = config.meta_tree;
 
+        var events = this.getEvents('booker');
+        var tasks = [
+            {
+                name: events.request,
+                handler: this.request_resource
+            }
         ];
         _.forEach(tasks, (task) => {
             this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
@@ -66,8 +70,28 @@ class Booker extends Abstract {
 
     //API
 
-    resolve() {
+    request_resource({
+        db_id: id,
+        data: data,
+        action: actname
+    }) {
+        var [type, num_id] = id.split("/");
+        var Resource = this.meta_tree.Resource;
+        if (!Resource)
+            return Promise.reject(new Error("MISCONFIGURATION", "No such class in MetaTree"));
+        var res = Resource.spawn({
+            db_id: num_id
+        });
+        if (!actname || !~_.indexOf(res.exposed_api, actname))
+            return Promise.reject(new Error("MISSING_METHOD"));
 
+        return res.retrieve()
+            .then(() => {
+                return res[actname]()
+            })
+            .then(() => {
+                return res.save();
+            });
     }
 }
 

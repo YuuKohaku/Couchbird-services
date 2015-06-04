@@ -1,11 +1,13 @@
 'use strict'
 
 var Abstract = require('../Abstract/abstract.js');
+var _ = require("lodash");
+var Error = require("../Error/CBError");
 
-class Arbiter extends Abstract {
+class Broker extends Abstract {
     constructor() {
         super({
-            event_group: 'arbiter'
+            event_group: 'broker'
         });
 
         this.queues_required = {
@@ -27,13 +29,12 @@ class Arbiter extends Abstract {
             return Promise.reject(new Error("SERVICE_ERROR", 'U should set channels before'));
         }
 
-        var events = this.getEvents('replication');
-        var ways = {
-            one: 'direct',
-            two: 'bidirect'
-        };
+        this.identifier = config.meta_tree._default_id;
         var tasks = [
-
+            {
+                name: this.event_names.resources,
+                handler: this.list
+            }
         ];
         _.forEach(tasks, (task) => {
             this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
@@ -66,9 +67,22 @@ class Arbiter extends Abstract {
 
     //API
 
-    resolve() {
+    list({
+        type: res_type, //e.g. timeslot
+        start: from, //params for range
+        end: to //
+    }) {
+        //temporary. Means that start and end contain ids of timeslots in db
+        var dbrange = _.map(_.range(from, to + 1), (id) => {
+            return this.identifier("resource", id);
+        });
 
+        return this.emitter.addTask(this.getEvents('dbface').request, {
+            action: 'getMulti',
+            params: [dbrange],
+            id: false
+        });
     }
 }
 
-module.exports = Arbiter;
+module.exports = Broker;
