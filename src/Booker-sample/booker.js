@@ -32,10 +32,9 @@ class Booker extends Abstract {
 
         this.meta_tree = config.meta_tree;
 
-        var events = this.getEvents('booker');
         var tasks = [
             {
-                name: events.request,
+                name: this.event_names.request,
                 handler: this.request_resource
             }
         ];
@@ -76,10 +75,11 @@ class Booker extends Abstract {
         action: actname
     }) {
         var [type, num_id] = id.split("/");
-        var Resource = this.meta_tree.Resource;
-        if (!Resource)
+        var mo_name = _.capitalize(type);
+        var mo = this.meta_tree[mo_name];
+        if (!mo)
             return Promise.reject(new Error("MISCONFIGURATION", "No such class in MetaTree"));
-        var res = Resource.spawn({
+        var res = this.meta_tree.create(mo, {
             db_id: num_id
         });
         if (!actname || !~_.indexOf(res.exposed_api, actname))
@@ -87,10 +87,7 @@ class Booker extends Abstract {
 
         return res.retrieve()
             .then(() => {
-                return res[actname]()
-            })
-            .then(() => {
-                return res.save();
+                return res[actname]();
             });
     }
 }

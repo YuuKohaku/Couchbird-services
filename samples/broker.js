@@ -37,6 +37,8 @@ booker.setChannels({
     "queue": ee
 });
 
+var requested = [];
+
 //ee.listenTask('dbface.request', d => console.log("REQUEST", d));
 //ee.listenTask('dbface.response', d => console.log("RESPONSE", d));
 
@@ -65,12 +67,12 @@ init()
     .then(() => {
         return ee.addTask(broker.event_names.resources, {
             start: 1,
-            end: 5
+            end: 4
         });
     })
     .then((res) => {
         console.log("RESPONDED WITH", res);
-        var requested = _.sample(_.pairs(res));
+        requested = _.sample(_.pairs(res));
         console.log("TAKING", requested);
         return ee.addTask(booker.event_names.request, {
             db_id: requested[0],
@@ -78,6 +80,43 @@ init()
             action: 'book'
         });
     })
+    .delay(1500)
     .then((res) => {
-        console.log("RESPONSE:", res);
+        console.log("BOOK RESPONSE:", res);
+        return ee.addTask(booker.event_names.request, {
+            db_id: requested[0],
+            data: requested[1],
+            action: 'postpone'
+        });
+    })
+    .delay(1500)
+    .then((res) => {
+        console.log("POSTPONE RESPONSE:", res);
+        return ee.addTask(booker.event_names.request, {
+            db_id: requested[0],
+            data: requested[1],
+            action: 'reserve'
+        });
+    })
+    .delay(1500)
+    .then((res) => {
+        console.log("RESERVE RESPONSE:", res);
+        return ee.addTask(booker.event_names.request, {
+            db_id: requested[0],
+            data: requested[1],
+            action: 'progress'
+        });
+    })
+    .delay(1500)
+    .then((res) => {
+        console.log("PROGRESS RESPONSE:", res);
+        return ee.addTask(booker.event_names.request, {
+            db_id: requested[0],
+            data: requested[1],
+            action: 'free'
+        });
+    })
+    .delay(1500)
+    .then((res) => {
+        console.log("FREE RESPONSE:", res);
     });

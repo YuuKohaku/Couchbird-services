@@ -163,7 +163,7 @@ class Replicator extends Abstract {
             return Promise.reject(new Error("SERVICE_ERROR", 'U should set channels before'));
         }
 
-        var events = this.getEvents('replication');
+        var events = this.event_names;
         var ways = {
             one: 'direct',
             two: 'bidirect'

@@ -27,11 +27,7 @@ class Arbiter extends Abstract {
             return Promise.reject(new Error("SERVICE_ERROR", 'U should set channels before'));
         }
 
-        var events = this.getEvents('replication');
-        var ways = {
-            one: 'direct',
-            two: 'bidirect'
-        };
+
         var tasks = [
 
         ];
