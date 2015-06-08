@@ -196,8 +196,7 @@ class Replicator extends Abstract {
             {
                 name: events.resume(ways.one),
                 handler: this.resume_oneway_replication
-            },
-            {
+            }, {
                 name: events.resume(ways.two),
                 handler: this.resume_twoway_replication
             }

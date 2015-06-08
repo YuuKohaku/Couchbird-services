@@ -12,18 +12,27 @@ class Resource extends Historified {
         this.exposed_api = ["book", "postpone", "reserve", "progress", "idle", "free", "available", "unavailable"];
     }
 
-    retrieve() {
-        return super.retrieve().then((res) => {
-            this.owner = this.role;
-            return Promise.resolve(res);
-        });
+    retrieve({
+        cas: cas
+    }) {
+        super.retrieve({
+                cas: cas
+            })
+            .then((res) => {
+                this.owner = this.role;
+                return Promise.resolve(res);
+            });
     }
 
     //need to retrieve() before use this
-    book() {
+    book({
+        cas: cas
+    }) {
         this.set('busy', true);
         this.set('state', 'reserved');
-        return this.save();
+        return this.save({
+            cas: cas
+        });
     }
 
     //only for busy state

@@ -87,7 +87,9 @@ class Booker extends Abstract {
 
         return res.retrieve()
             .then(() => {
-                return res[actname]();
+                return res[actname]({
+                    cas: data.cas
+                });
             });
     }
 }

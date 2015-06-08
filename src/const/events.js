@@ -17,7 +17,9 @@ var events = {
     broker: {
         resources: "broker.list.resources"
     },
-    arbiter: {},
+    arbiter: {
+        getup: "arbiter.wake"
+    },
     replication: {
         create: function (way) {
             return 'replication.create.' + way;

@@ -7,6 +7,8 @@ var path = require("path");
 var Broker = require('./Broker-sample/broker');
 var Booker = require('./Booker-sample/booker');
 var Facehugger = require('./DBWorker/facehugger');
+var Replicator = require("./Replicator/replicator");
+var Arbiter = require("./Arbiter/arbiter");
 var Queue = require('custom-queue');
 
 var config = require('./const/config');
@@ -14,8 +16,8 @@ var config = require('./const/config');
 var MetaTree = require("MetaTree").MetaTree;
 
 var meta_tree = new MetaTree({
-    server_ip: "192.168.1.3",
-    n1ql: "192.168.1.3:8093",
+    server_ip: "127.0.0.1",
+    n1ql: "127.0.0.1:8093",
     bucket_name: "mt",
     role: config.name
 });
@@ -23,11 +25,22 @@ var meta_tree = new MetaTree({
 var alien = new Facehugger();
 var broker = new Broker();
 var booker = new Booker();
+var arbiter = new Arbiter();
+var rep = new Replicator();
+
+rep.hosts.add("lunar", "192.168.1.4", "Administrator:456789");
+rep.hosts.add("basilisk", "192.168.1.3", "Administrator:123456");
 
 var ee = new Queue();
 
 
 alien.setChannels({
+    "queue": ee
+});
+rep.setChannels({
+    "queue": ee
+});
+arbiter.setChannels({
     "queue": ee
 });
 broker.setChannels({
@@ -38,7 +51,14 @@ booker.setChannels({
 });
 
 var requested = [];
-
+var data = {
+    src_host: "basilisk",
+    src_bucket: "mt",
+    dst_host: "lunar",
+    dst_bucket: "rmt",
+    ts: _.now()
+};
+var timeo = 3000;
 //ee.listenTask('dbface.request', d => console.log("REQUEST", d));
 //ee.listenTask('dbface.response', d => console.log("RESPONSE", d));
 
@@ -56,6 +76,10 @@ var init = Promise.coroutine(function* () {
     yield booker.init({
         meta_tree: meta_tree
     });
+    yield rep.init();
+    yield arbiter.init({
+        hosts: rep.hosts
+    });
 });
 
 init()
@@ -63,13 +87,25 @@ init()
         alien.tryToStart();
         broker.tryToStart();
         booker.tryToStart();
+        rep.tryToStart();
+        arbiter.tryToStart();
     })
+    .then(() => {
+        return ee.addTask(rep.event_names.create('bidirect'), data);
+    })
+    .delay(timeo * 3)
+    .then(() => {
+        data.ts = _.now() / 1000 - 500;
+        return ee.emit(arbiter.event_names.getup, data);
+    })
+    .delay(timeo)
     .then(() => {
         return ee.addTask(broker.event_names.resources, {
             start: 1,
             end: 4
         });
     })
+    .delay(timeo)
     .then((res) => {
         console.log("RESPONDED WITH", res);
         requested = _.sample(_.pairs(res));
@@ -80,7 +116,7 @@ init()
             action: 'book'
         });
     })
-    .delay(1500)
+    .delay(timeo)
     .then((res) => {
         console.log("BOOK RESPONSE:", res);
         return ee.addTask(booker.event_names.request, {
@@ -89,7 +125,7 @@ init()
             action: 'postpone'
         });
     })
-    .delay(1500)
+    .delay(timeo)
     .then((res) => {
         console.log("POSTPONE RESPONSE:", res);
         return ee.addTask(booker.event_names.request, {
@@ -98,7 +134,7 @@ init()
             action: 'reserve'
         });
     })
-    .delay(1500)
+    .delay(timeo)
     .then((res) => {
         console.log("RESERVE RESPONSE:", res);
         return ee.addTask(booker.event_names.request, {
@@ -107,7 +143,7 @@ init()
             action: 'progress'
         });
     })
-    .delay(1500)
+    .delay(timeo)
     .then((res) => {
         console.log("PROGRESS RESPONSE:", res);
         return ee.addTask(booker.event_names.request, {
@@ -116,7 +152,10 @@ init()
             action: 'free'
         });
     })
-    .delay(1500)
+    .delay(timeo)
     .then((res) => {
         console.log("FREE RESPONSE:", res);
+    })
+    .then(() => {
+        return ee.addTask(rep.event_names.remove('bidirect'), data);
     });
