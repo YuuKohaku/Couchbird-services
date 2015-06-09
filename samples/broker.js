@@ -28,8 +28,8 @@ var booker = new Booker();
 var arbiter = new Arbiter();
 var rep = new Replicator();
 
-rep.hosts.add("lunar", "192.168.1.4", "Administrator:456789");
-rep.hosts.add("basilisk", "192.168.1.3", "Administrator:123456");
+rep.hosts.add("lunar", "192.168.1.93", "Administrator:456789");
+rep.hosts.add("basilisk", "192.168.1.91", "Administrator:123456");
 
 var ee = new Queue();
 
@@ -94,12 +94,17 @@ init()
         return ee.addTask(rep.event_names.create('bidirect'), data);
     })
     .delay(timeo * 3)
-    .then(() => {
-        data.ts = _.now() / 1000 - 500;
-        return ee.emit(arbiter.event_names.getup, data);
+    .then((res) => {
+        console.log("SETTINGS", res);
+        var evdata = _.clone(data);
+        evdata.settings = {
+            docBatchSizeKb: 512,
+            checkpointInterval: 10 //please, do not use this in production until you're all sure about your hardware
+        };
+        return ee.addTask(rep.event_names.settings, evdata);
     })
-    .delay(timeo)
-    .then(() => {
+    .delay(timeo * 3)
+    .then((res) => {
         return ee.addTask(broker.event_names.resources, {
             start: 1,
             end: 4
@@ -156,6 +161,13 @@ init()
     .then((res) => {
         console.log("FREE RESPONSE:", res);
     })
+    .delay(timeo)
+    .then((res) => {
+        data.ts = _.now() / 1000 - 100;
+        ee.emit(arbiter.event_names.getup, data);
+        return res;
+    })
+    .delay(timeo)
     .then(() => {
         return ee.addTask(rep.event_names.remove('bidirect'), data);
     });

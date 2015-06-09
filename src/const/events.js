@@ -32,7 +32,8 @@ var events = {
         },
         resume: function (way) {
             return 'replication.resume.' + way;
-        }
+        },
+        settings: "replication.settings"
     },
     permission: {
         dropped: function (name, key) {

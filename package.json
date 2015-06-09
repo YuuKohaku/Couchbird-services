@@ -1,37 +1,38 @@
 {
-    "name": "Couchbird-services",
-    "version": "0.0.1",
-    "description": "database worker service",
-    "main": "src/index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sdk-group/Couchbird-services.git"
-    },
-    "author": "V.",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/sdk-group/Couchbird-services/issues"
-    },
-    "homepage": "https://github.com/sdk-group/Couchbird-services",
-    "dependencies": {
-        "Couchbird": "git+https://github.com/YuuKohaku/Couchbird.git",
-        "MetaTree": "git+https://github.com/YuuKohaku/MetaTree.git",
-        "bluebird": "^2.9.24",
-        "custom-queue": "https://github.com/artificial-life/custom-queue",
-        "lodash": "^3.7.0",
-        "request": "^2.55.0",
-        "validator": "^3.40.0",
-        "wascally": "^0.2.4"
-    },
-    "devDependencies": {
-        "gulp": "^3.8.11",
-        "gulp-babel": "^5.1.0",
-        "gulp-concat": "^2.5.2",
-        "gulp-sourcemaps": "^1.5.2",
-        "gulp-watch": "^4.2.4",
-        "harmonize": "^1.4.2"
-    }
+  "name": "Couchbird-services",
+  "version": "0.0.1",
+  "description": "database worker service",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sdk-group/Couchbird-services.git"
+  },
+  "author": "V.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdk-group/Couchbird-services/issues"
+  },
+  "homepage": "https://github.com/sdk-group/Couchbird-services",
+  "dependencies": {
+    "Couchbird": "git+https://github.com/YuuKohaku/Couchbird.git",
+    "MetaTree": "git+https://github.com/YuuKohaku/MetaTree.git",
+    "bluebird": "^2.9.24",
+    "custom-queue": "https://github.com/artificial-life/custom-queue",
+    "lodash": "^3.7.0",
+    "make-error": "^1.0.2",
+    "request": "^2.55.0",
+    "validator": "^3.40.0",
+    "wascally": "^0.2.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.1.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-watch": "^4.2.4",
+    "harmonize": "^1.4.2"
+  }
 }

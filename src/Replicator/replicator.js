@@ -35,24 +35,8 @@ var create_replication = function (ip, sb, dhost, db, usr, pwd) {
     return request(options);
 }
 
-var remove_replication = function (ip, ref, usr, pwd) {
-    var options = {
-        uri: '/controller/cancelXDCR/' + encodeURIComponent(ref),
-        baseUrl: "http://" + [ip, 8091].join(":"),
-        method: 'DELETE',
-        auth: {
-            user: usr,
-            pass: pwd
-        }
-    };
-
-    return request(options);
-}
-
-var toggle_replication = function (ip, usr, pwd, ref = false, on = true) {
-    var postData = qs.stringify({
-        pauseRequested: on
-    });
+var set_settings = function (ip, usr, pwd, ref = false, settings) {
+    var postData = qs.stringify(settings);
     var uri = ref ? '/settings/replications/' + encodeURIComponent(ref) : '/settings/replications';
     var options = {
         uri: uri,
@@ -71,6 +55,35 @@ var toggle_replication = function (ip, usr, pwd, ref = false, on = true) {
 
     return request(options);
 }
+
+var get_settings = function (ip, usr, pwd, ref = false) {
+    var uri = ref ? '/settings/replications/' + encodeURIComponent(ref) : '/settings/replications';
+    var options = {
+        uri: uri,
+        baseUrl: "http://" + [ip, 8091].join(":"),
+        method: 'GET',
+        auth: {
+            user: usr,
+            pass: pwd
+        }
+    };
+    return request(options);
+};
+
+var remove_replication = function (ip, ref, usr, pwd) {
+    var options = {
+        uri: '/controller/cancelXDCR/' + encodeURIComponent(ref),
+        baseUrl: "http://" + [ip, 8091].join(":"),
+        method: 'DELETE',
+        auth: {
+            user: usr,
+            pass: pwd
+        }
+    };
+
+    return request(options);
+}
+
 
 var get_reference = function (ip, sb, dhost, db, usr, pwd) {
     var options = {
@@ -199,6 +212,9 @@ class Replicator extends Abstract {
             }, {
                 name: events.resume(ways.two),
                 handler: this.resume_twoway_replication
+            }, {
+                name: events.settings,
+                handler: this.settings
             }
         ];
         _.forEach(tasks, (task) => {
@@ -258,6 +274,36 @@ class Replicator extends Abstract {
             });
     }
 
+    settings({
+        src_host: shost,
+        src_bucket: sb,
+        dst_host: dhost,
+        dst_bucket: db,
+        settings: settings
+    }) {
+        var src = this.hosts.show(shost);
+        if (!src) {
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+        }
+
+        var key = [shost, sb, dhost, db].join(":");
+        return new Promise((resolve, reject) => {
+                return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));
+            })
+            .then((ref) => {
+                var promise = (_.isObject(settings)) ?
+                    set_settings(src.ip, src.usr, src.pwd, ref, settings) :
+                    get_settings(src.ip, src.usr, src.pwd, ref);
+
+                return promise
+                    .then((res) => {
+                        var response = JSON.parse(res[1]);
+                        return Promise.resolve(response);
+                    });
+            });
+
+    }
+
     create_oneway_replication({
         src_host: shost,
         src_bucket: sb,
@@ -308,22 +354,15 @@ class Replicator extends Abstract {
         dst_host: dhost,
         dst_bucket: db
     }) {
-        var src = this.hosts.show(shost);
-        if (!src) {
-            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
-        }
-
-        var key = [shost, sb, dhost, db].join(":");
-        return new Promise((resolve, reject) => {
-                return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));
-            })
-            .then((ref) => {
-                return toggle_replication(src.ip, src.usr, src.pwd, ref, true)
-                    .then((res) => {
-                        var response = JSON.parse(res[1]);
-                        return Promise.resolve(response);
-                    });
-            });
+        return this.settings({
+            src_host: shost,
+            src_bucket: sb,
+            dst_host: dhost,
+            dst_bucket: db,
+            settings: {
+                pauseRequested: true
+            }
+        });
     }
 
     resume_oneway_replication({
@@ -332,22 +371,15 @@ class Replicator extends Abstract {
         dst_host: dhost,
         dst_bucket: db
     }) {
-        var src = this.hosts.show(shost);
-        if (!src) {
-            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
-        }
-
-        var key = [shost, sb, dhost, db].join(":");
-        return new Promise((resolve, reject) => {
-                return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));
-            })
-            .then((ref) => {
-                return toggle_replication(src.ip, src.usr, src.pwd, ref, false)
-                    .then((res) => {
-                        var response = JSON.parse(res[1]);
-                        return Promise.resolve(response);
-                    });
-            });
+        return this.settings({
+            src_host: shost,
+            src_bucket: sb,
+            dst_host: dhost,
+            dst_bucket: db,
+            settings: {
+                pauseRequested: false
+            }
+        });
     }
 
     create_twoway_replication({

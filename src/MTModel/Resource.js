@@ -1,6 +1,7 @@
 'use strict';
 
 var Historified = require("MetaTree").Historified;
+var Error = require("../Error/Lapsus")("MetaTree_Resource");
 var path = require("path");
 var Promise = require("bluebird");
 var _ = require("lodash");
@@ -12,12 +13,8 @@ class Resource extends Historified {
         this.exposed_api = ["book", "postpone", "reserve", "progress", "idle", "free", "available", "unavailable"];
     }
 
-    retrieve({
-        cas: cas
-    }) {
-        super.retrieve({
-                cas: cas
-            })
+    retrieve() {
+        return super.retrieve()
             .then((res) => {
                 this.owner = this.role;
                 return Promise.resolve(res);
@@ -25,13 +22,14 @@ class Resource extends Historified {
     }
 
     //need to retrieve() before use this
-    book({
-        cas: cas
+    book(opts = {
+        cas: false
     }) {
+        if (!opts.cas) return Promise.reject(new Error("INVALID_ARGUMENT", "Specify cas to use booking."));
         this.set('busy', true);
         this.set('state', 'reserved');
         return this.save({
-            cas: cas
+            cas: opts.cas
         });
     }
 

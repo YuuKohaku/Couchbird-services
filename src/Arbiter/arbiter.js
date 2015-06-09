@@ -6,13 +6,12 @@ var qs = require("querystring");
 var request = Promise.promisify(require("request"));
 
 var Abstract = require('../Abstract/abstract.js');
-var Error = require("../Error/ArbiterError");
+var Error = require("../Error/Lapsus")("Arbiter");
 
 //UTILITY
 
 var get_history = function (ip, sb, since) {
     var uri = sb + '/_design/history_ts/_view/history_ts?stale=false&startkey=' + since;
-    console.log("URI", uri);
     var options = {
         uri: uri,
         baseUrl: "http://" + [ip, 8092].join(":"),
@@ -22,8 +21,12 @@ var get_history = function (ip, sb, since) {
     return request(options)
         .then((res) => {
             var response = JSON.parse(res[1]);
-            console.log("RESP", response);
+            return Promise.resolve(response);
         });
+}
+
+var compare = function (json1 = {}, json2 = {}) {
+
 }
 
 
@@ -100,8 +103,8 @@ class Arbiter extends Abstract {
     }) {
         var src = this.hosts.show(shost);
         var dst = this.hosts.show(dhost);
-        if (!src) {
-            return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+        if (!src || !dst) {
+            return Promise.reject(new Error("MISCONFIGURATION", "Configure source and destination hosts before you ask it for anything, dammit."));
         }
         return this.emitter.addTask(this.getEvents('replication').pause('bidirect'), {
                 src_host: shost,
