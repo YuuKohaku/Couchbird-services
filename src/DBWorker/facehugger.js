@@ -3,7 +3,8 @@ var Promise = require('bluebird');
 var Abstract = require('../Abstract/abstract.js');
 var _ = require("lodash");
 var Couchbird = require("Couchbird");
-var Error = require("../Error/CBError");
+var Error = require("../Error/Lapsus")("FacehuggerError");
+
 
 var DB_Face = null;
 
@@ -17,6 +18,7 @@ class Facehugger extends Abstract {
             "event-queue": false,
             "task-queue": true
         };
+        this.errname = Error.name;
     }
 
     setChannels(options) {
@@ -96,21 +98,6 @@ class Facehugger extends Abstract {
             //Still doesn't feel secure enough
             return resolve(this._db[actname].apply(this._db, args));
         });
-        //            .then((res) => {
-        //                this.emitter.addTask(this.event_names.response, {
-        //                    response: res,
-        //                    id: mid
-        //                });
-        //                return Promise.resolve(res);
-        //            })
-        //            .catch((err) => {
-        //                this.emitter.addTask(this.event_names.response, {
-        //                    response: err.message,
-        //                    id: mid
-        //                });
-        //                return Promise.resolve(false);
-        //
-        //            });
     }
 }
 

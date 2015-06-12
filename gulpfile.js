@@ -16,7 +16,7 @@ gulp.task("default", function () {
             setTimeout(function () {
                 console.log('timeout');
                 process.exit()
-            }, 50000);
+            }, 60000);
         });
 });
 

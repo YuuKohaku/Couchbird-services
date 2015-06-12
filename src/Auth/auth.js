@@ -48,7 +48,7 @@ class Auth extends Abstract {
     pause() {
         //@TODO: Dunno what should they do when paused or resumed
         super.pause();
-        
+
         this.paused = true;
         this.list.pause();
 

@@ -2,7 +2,7 @@
 
 var Abstract = require('../Abstract/abstract.js');
 var _ = require("lodash");
-var Error = require("../Error/CBError");
+var Error = require("../Error/Lapsus")("BrokerError");
 
 class Broker extends Abstract {
     constructor() {
@@ -14,6 +14,7 @@ class Broker extends Abstract {
             "event-queue": false,
             "task-queue": true
         };
+        this.errname = Error.name;
 
     }
 

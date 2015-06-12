@@ -12,7 +12,9 @@ var events = {
 
     },
     booker: {
-        request: "booker.request"
+        request: "booker.request",
+        pause: "booker.pause",
+        resume: "booker.resume"
     },
     broker: {
         resources: "broker.list.resources"

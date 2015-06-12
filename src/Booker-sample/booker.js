@@ -2,7 +2,7 @@
 
 var Abstract = require('../Abstract/abstract.js');
 var _ = require("lodash");
-var Error = require("../Error/CBError");
+var Error = require("../Error/Lapsus")("BookerError");
 var Promise = require("bluebird");
 
 class Booker extends Abstract {
@@ -16,6 +16,7 @@ class Booker extends Abstract {
             "task-queue": true
         };
 
+        this.errname = Error.name;
     }
 
     setChannels(options) {
@@ -31,11 +32,44 @@ class Booker extends Abstract {
         }
 
         this.meta_tree = config.meta_tree;
+        var role = this.meta_tree._role; //metatree roles are main/replica; for booker service, master is replica
+        this.main = (role == "replica") || !config.slave; //if true, service won't need a permission to work
+        this.master = config.master || (this.main ? "127.0.0.1" : false);
+        if (!this.master) {
+            return Promise.reject(new Error("SERVICE_ERROR", "Either run this on master or specify master ip."))
+        }
+
+        if (!this.main) {
+            this.addPermission("ip", this.master);
+        }
+
+        this.required_permissions.dropped(() => {
+            if (this.state() === 'working') {
+                console.log('Booker : waiting...');
+                this.pause();
+                this.state('waiting');
+            }
+        });
+
+        this.required_permissions.restored(() => {
+            if (this.state() === 'waiting') {
+                this.start();
+                console.log('Booker : starting...');
+            }
+        });
 
         var tasks = [
             {
                 name: this.event_names.request,
                 handler: this.request_resource
+            },
+            {
+                name: this.event_names.pause,
+                handler: this.pause
+            },
+            {
+                name: this.event_names.resume,
+                handler: this.resume
             }
         ];
         _.forEach(tasks, (task) => {
@@ -47,7 +81,6 @@ class Booker extends Abstract {
     start() {
         super.start();
         this.paused = false;
-
         return this;
     }
 
@@ -74,6 +107,8 @@ class Booker extends Abstract {
         data: data,
         action: actname
     }) {
+        if (this.paused)
+            return Promise.reject(new Error("SERVICE_ERROR", "Service is paused"));
         var [type, num_id] = id.split("/");
         var mo_name = _.capitalize(type);
         var mo = this.meta_tree[mo_name];
@@ -87,8 +122,14 @@ class Booker extends Abstract {
 
         return res.retrieve()
             .then(() => {
-                return res[actname]({
-                    cas: data.cas
+                return res[actname](data);
+            })
+            .then((success) => {
+                return Promise.resolve({
+                    db_id: id,
+                    data: data,
+                    action: action,
+                    success: success
                 });
             });
     }

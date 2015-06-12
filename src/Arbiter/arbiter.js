@@ -6,7 +6,7 @@ var qs = require("querystring");
 var request = Promise.promisify(require("request"));
 
 var Abstract = require('../Abstract/abstract.js');
-var Error = require("../Error/Lapsus")("Arbiter");
+var Error = require("../Error/Lapsus")("ArbiterError");
 
 //UTILITY
 
@@ -25,7 +25,7 @@ var get_history = function (ip, sb, since) {
         });
 }
 
-var compare = function (json1 = {}, json2 = {}) {
+var compare = function (hst1 = {}, hst2 = {}) {
 
 }
 
@@ -117,7 +117,7 @@ class Arbiter extends Abstract {
                 return Promise.all([get_history(src.ip, sb, ts), get_history(dst.ip, db, ts)]);
             })
             .then((res) => {
-                console.log("HISTORY", res);
+                console.log("HISTORY", res.rows);
             });
     }
 }

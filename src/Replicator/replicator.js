@@ -5,7 +5,7 @@ var qs = require("querystring");
 var request = Promise.promisify(require("request"));
 
 var Abstract = require('../Abstract/abstract.js');
-var Error = require("../Error/ReplicatorError");
+var Error = require("../Error/Lapsus")("ReplicatorError");
 var Constellation = require("./hosts/constellation");
 
 //UTILITY
@@ -162,6 +162,8 @@ class Replicator extends Abstract {
         };
         this.hosts = new Constellation();
         this.rids = {};
+        this.errname = Error.name;
+
     }
 
     setChannels(options) {
