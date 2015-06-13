@@ -4,9 +4,9 @@
         {
             "name": "ping",
             "params": {
-                "ip": ["192.168.1.2", "ya.ru"],
-                "less_then": 1400,
-                "interval": 1000
+                "ip": ["192.168.1.2"],
+                "less_then": 1000,
+                "interval": 2000
             }
         },
         {
@@ -15,7 +15,7 @@
                 "permission_to_slay": "ip",
                 "key_data": "192.168.1.2",
                 "execution_time": 5000,
-                "revive_time": 10000
+                "revive_time": 6000
             }
         }
         ]

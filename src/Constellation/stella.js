@@ -6,7 +6,7 @@
 var validate = require("validator");
 var _ = require('lodash');
 
-var Error = require("../../Error/ReplicatorError")
+var Error = require("../Error/Lapsus")("ConstellationError");
 
 class Stella {
     constructor(ip, hostname, credentials) {
@@ -21,6 +21,7 @@ class Stella {
         this.auth = credentials;
         this.usr = creds[0];
         this.pwd = creds[1];
+        this.active = false;
     }
 }
 

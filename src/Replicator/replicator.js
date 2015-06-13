@@ -6,7 +6,6 @@ var request = Promise.promisify(require("request"));
 
 var Abstract = require('../Abstract/abstract.js');
 var Error = require("../Error/Lapsus")("ReplicatorError");
-var Constellation = require("./hosts/constellation");
 
 //UTILITY
 
@@ -36,6 +35,7 @@ var create_replication = function (ip, sb, dhost, db, usr, pwd) {
 }
 
 var set_settings = function (ip, usr, pwd, ref = false, settings) {
+    console.log("set SETTINGS", arguments)
     var postData = qs.stringify(settings);
     var uri = ref ? '/settings/replications/' + encodeURIComponent(ref) : '/settings/replications';
     var options = {
@@ -106,6 +106,9 @@ var get_reference = function (ip, sb, dhost, db, usr, pwd) {
                 return Promise.reject(res);
             var ref = [cluster_ref[0].uuid, sb, db].join("/");
             return Promise.resolve(ref);
+        })
+        .catch((err) => {
+            console.log("REF ERROR", err);
         });
 }
 
@@ -160,7 +163,6 @@ class Replicator extends Abstract {
             "event-queue": false,
             "task-queue": true
         };
-        this.hosts = new Constellation();
         this.rids = {};
         this.errname = Error.name;
 
@@ -217,11 +219,33 @@ class Replicator extends Abstract {
             }, {
                 name: events.settings,
                 handler: this.settings
+            },
+            {
+                name: events.stats,
+                handler: this.get_replication_state
             }
         ];
         _.forEach(tasks, (task) => {
             this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
         });
+        this.hosts = config.hosts || {};
+        this.hosts.forEach((val, key) => {
+            var ip = val.ip;
+            var drop = this.getEvents("permission").dropped("ip", ip);
+            var rest = this.getEvents("permission").restored("ip", ip);
+            console.log("Replicator: Now watching host ", ip);
+            this.emitter.on(drop, _.bind(this.inactive, this));
+            this.emitter.on(rest, _.bind(this.active, this));
+            //leaving this for a better time
+            //            this.addPermission("ip", ip);
+        });
+
+        //        this.required_permissions.dropped((data) => {
+        //            console.log("DROPPED:", data);
+        //        });
+        //        this.required_permissions.restored((data) => {
+        //            console.log("RESTORED:", data);
+        //        });
 
         return Promise.resolve(true);
     }
@@ -251,6 +275,14 @@ class Replicator extends Abstract {
 
     //API
 
+    inactive(data) {
+        this.hosts.lapse(data.permission.key);
+    }
+
+    active(data) {
+        this.hosts.lapse(data.permission.key, true);
+    }
+
     get_replication_state({
         src_host: shost,
         src_bucket: sb,
@@ -259,8 +291,12 @@ class Replicator extends Abstract {
         stat_name: stat
     }) {
         var src = this.hosts.show(shost);
+        var dst = this.hosts.show(dhost);
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+        }
+        if (!src.active || !dst.active) {
+            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
         }
         var key = [shost, sb, dhost, db].join(":");
         return new Promise((resolve, reject) => {
@@ -284,9 +320,14 @@ class Replicator extends Abstract {
         settings: settings
     }) {
         var src = this.hosts.show(shost);
+        var dst = this.hosts.show(dhost);
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
+        if (!src.active || !dst.active) {
+            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
+        }
+
 
         var key = [shost, sb, dhost, db].join(":");
         return new Promise((resolve, reject) => {
@@ -313,8 +354,12 @@ class Replicator extends Abstract {
         dst_bucket: db
     }) {
         var src = this.hosts.show(shost);
+        var dst = this.hosts.show(dhost);
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
+        }
+        if (!src.active || !dst.active) {
+            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
         }
 
         return create_replication(src.ip, sb, dhost, db, src.usr, src.pwd)
@@ -333,9 +378,14 @@ class Replicator extends Abstract {
         dst_bucket: db
     }) {
         var src = this.hosts.show(shost);
+        var dst = this.hosts.show(dhost);
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
+        if (!src.active || !dst.active) {
+            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
+        }
+
         var key = [shost, sb, dhost, db].join(":");
         return new Promise((resolve, reject) => {
                 return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));

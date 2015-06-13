@@ -11,36 +11,36 @@ var Stella = require("./stella");
 
 class Constellation {
     constructor() {
-        Object.defineProperties(this, {
-            "list": {
-                value: (new Map()),
-                writable: true,
-                enumerable: false,
-                configurable: false
-            }
-        });
+        this.list = {};
+        this.forEach = _.partial(_.forEach, this.list);
     }
 
     show(hostname) {
-        return this.list.get(hostname);
+        return this.list[hostname];
     }
 
     add(hostname, ip, credentials) {
         var stella = new Stella(ip, hostname, credentials);
-        this.list.set(hostname, stella);
+        this.list[hostname] = stella;
         return this;
     }
 
     remove(hostname) {
-        this.list.delete(hostname);
+        delete this.list[hostname];
         return this;
     }
 
     update_credentials(hostname, ip, credentials) {
         this.list.delete(hostname);
-        var stella = new Stella(ip, hostname, credentials);
-        this.list.set(hostname, stella);
+        this.list.add(hostname, ip, credentials);
         return this;
+    }
+
+    lapse(ip, on = false) {
+        var stella = _.find(this.list, {
+            "ip": ip
+        });
+        stella.active = !!on;
     }
 }
 

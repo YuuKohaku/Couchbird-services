@@ -1,0 +1,14 @@
+function (doc, meta) {
+  var parts = meta.id.split("/");
+  if(parts[0] == "history"){
+    var data = {};
+    var ts = parseInt(parts[parts.length-1]);
+    var date = (new Date(ts)).toUTCString();
+    var id = parts.slice(2,parts.length-1).join("/");
+    data.resource = id;
+    data.ts = date;
+     data.owner = parts[1];
+    data.changes = doc;
+   emit(ts, data);
+  }
+}

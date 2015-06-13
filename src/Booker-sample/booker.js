@@ -17,6 +17,8 @@ class Booker extends Abstract {
         };
 
         this.errname = Error.name;
+        this.paused_ts = 0;
+
     }
 
     setChannels(options) {
@@ -32,20 +34,24 @@ class Booker extends Abstract {
         }
 
         this.meta_tree = config.meta_tree;
-        var role = this.meta_tree._role; //metatree roles are main/replica; for booker service, master is replica
-        this.main = (role == "replica") || !config.slave; //if true, service won't need a permission to work
-        this.master = config.master || (this.main ? "127.0.0.1" : false);
-        if (!this.master) {
-            return Promise.reject(new Error("SERVICE_ERROR", "Either run this on master or specify master ip."))
-        }
+        this.hosts = config.hosts;
+        this.master = config.master || false;
+        var mip = "";
 
-        if (!this.main) {
-            this.addPermission("ip", this.master);
+        if (this.master) {
+            this.master_bucket = config.master_bucket;
+            this.slave = config.slave;
+            this.slave_bucket = config.slave_bucket;
+            if (!this.slave || !this.slave_bucket || !this.master_bucket)
+                return Promise.reject(new Error("SERVICE_ERROR", 'Specify all master-slave relations'));
+            mip = this.hosts.show(this.master);
+            if (!mip)
+                return Promise.reject(new Error("SERVICE_ERROR", 'Configure master constellation in hosts'));
+            this.addPermission("ip", mip.ip);
         }
 
         this.required_permissions.dropped(() => {
             if (this.state() === 'working') {
-                console.log('Booker : waiting...');
                 this.pause();
                 this.state('waiting');
             }
@@ -53,8 +59,15 @@ class Booker extends Abstract {
 
         this.required_permissions.restored(() => {
             if (this.state() === 'waiting') {
-                this.start();
-                console.log('Booker : starting...');
+                this.hosts.lapse(mip.ip, true);
+                this.emitter.emit(this.getEvents('arbiter').getup, {
+                        master: this.master,
+                        master_bucket: this.master_bucket,
+                        slave: this.slave,
+                        slave_bucket: this.slave_bucket,
+                        ts: this.paused_ts
+                    })
+                    .catch(err => console.log("BOOKER ERROR", err));
             }
         });
 
@@ -79,6 +92,7 @@ class Booker extends Abstract {
     }
 
     start() {
+        console.log('Booker : starting...');
         super.start();
         this.paused = false;
         return this;
@@ -86,16 +100,22 @@ class Booker extends Abstract {
 
     pause() {
         //@TODO: Dunno what should they do when paused or resumed
+        console.log('Booker : pausing...');
+
         super.pause();
         this.paused = true;
+        this.paused_ts = _.now() / 1000;
 
         return this;
     }
 
     resume() {
         //@TODO: Dunno what should they do when paused or resumed
+        console.log('Booker : resume...');
+
         super.resume();
         this.paused = false;
+        this.paused_ts = 0;
 
         return this;
     }
@@ -128,9 +148,9 @@ class Booker extends Abstract {
                 return Promise.resolve({
                     db_id: id,
                     data: data,
-                    action: action,
+                    action: actname,
                     success: success
-                });
+                })
             });
     }
 }
