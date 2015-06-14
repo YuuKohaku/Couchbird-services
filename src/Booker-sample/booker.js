@@ -35,6 +35,8 @@ class Booker extends Abstract {
 
         this.meta_tree = config.meta_tree;
         this.hosts = config.hosts;
+        this.paused_ts = _.now() / 1000;
+
         this.master = config.master || false;
         var mip = "";
 
@@ -58,6 +60,9 @@ class Booker extends Abstract {
         });
 
         this.required_permissions.restored(() => {
+            if (this.state() === 'init') {
+                this.start();
+            }
             if (this.state() === 'waiting') {
                 this.hosts.lapse(mip.ip, true);
                 //                this.resume();
@@ -68,10 +73,11 @@ class Booker extends Abstract {
                     slave_bucket: this.slave_bucket,
                     ts: this.paused_ts
                 }).then((res) => {
-                    this.resume();
+                    this.start();
                     this.state('working');
                 });
             }
+
         });
 
         var tasks = [
@@ -91,13 +97,17 @@ class Booker extends Abstract {
         _.forEach(tasks, (task) => {
             this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
         });
+        this.state('init');
+
         return Promise.resolve(true);
     }
 
     start() {
         console.log('Booker : starting...');
+
         super.start();
         this.paused = false;
+        this.paused_ts = 0;
         return this;
     }
 
@@ -153,6 +163,15 @@ class Booker extends Abstract {
                     data: data,
                     action: actname,
                     success: success
+                })
+            })
+            .catch((error) => {
+                return Promise.resolve({
+                    db_id: id,
+                    data: data,
+                    action: actname,
+                    success: false,
+                    error: error
                 })
             });
     }

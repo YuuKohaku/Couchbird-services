@@ -235,7 +235,7 @@ class Replicator extends Abstract {
             var pwd = val.pwd;
             var drop = this.getEvents("permission").dropped("ip", ip);
             var rest = this.getEvents("permission").restored("ip", ip);
-            console.log("Replicator: Now watching host ", ip);
+            //            console.log("Replicator: Now watching host ", ip);
             this.emitter.on(drop, _.bind(this.inactive, this));
             this.emitter.on(rest, _.bind(this.active, this));
             promises.push(get_references(ip, usr, pwd)

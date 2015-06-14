@@ -29,38 +29,21 @@ var get_history = function (ip, sb, since) {
         });
 }
 
-var diff_history = function (array, values) {
-    var length = array ? array.length : 0;
-    var result = [];
-
-    if (!length) {
-        return result;
-    }
-    var index = -1,
-        vlen = values.length;
-
-    outer:
-        while (++index < length) {
-            var value = array[index];
-            var vindex = vlen;
-            while (vindex--) {
-                if (_.isEqual(values[vindex], value)) {
-                    continue outer;
-                }
-                result.push(value);
-            }
-        }
-    return result;
-}
 
 var compare = function (hst_m = {}, hst_s = {}) {
-    //var diff = diff_history(hst1, hst2);
     var ids_m = _.pluck(hst_m, "id");
     var ids_s = _.pluck(hst_s, "id");
     var diff_m = _.difference(ids_m, ids_s); //ids that are present only on master
     var diff_s = _.difference(ids_s, ids_m); //ids that are present only on slave
-    console.log("DIFF_M", diff_m);
-    console.log("DIFF_S", diff_s);
+    //if master did something, do nothing
+    if (diff_m.length > 0) {
+        console.log("HISTORY: master did something:", diff_m);
+    }
+    //if slave did something, panic
+    if (diff_s.length > 0) {
+        console.log("HISTORY: slave did something:", diff_s);
+
+    }
 }
 
 
@@ -158,7 +141,7 @@ class Arbiter extends Abstract {
                 });
             })
             .then((res) => {
-                //                console.log("HISTORY", res);
+                console.log("HISTORY", res);
                 compare(res.mst.rows, res.slv.rows);
             })
             .then((res) => {
@@ -169,7 +152,10 @@ class Arbiter extends Abstract {
                     dst_bucket: mb
                 })
             })
-            //            .catch(err => console.log("ARB ERROR", err, err.stack));;
+            .catch((err) => {
+                console.log("ARB ERROR", err, err.stack);
+                return Promise.resolve(false)
+            });;
     }
 }
 

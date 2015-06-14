@@ -138,8 +138,7 @@ var init = Promise.coroutine(function* () {
         bucket_name: config.db.bucket_name
     });
     yield broker.init({
-        meta_tree: meta_tree,
-        hosts: hosts
+        meta_tree: meta_tree
     });
     yield booker.init({
         meta_tree: meta_tree,
@@ -161,16 +160,18 @@ init()
     .then(function () {
         auth.tryToStart();
         doctor.tryToStart();
+    }).delay(timeo)
+    .then(function () {
         alien.tryToStart();
         broker.tryToStart();
         booker.tryToStart();
         rep.tryToStart();
         arbiter.tryToStart();
     })
-    .delay(timeo * 5)
-    .then(() => {
-        return ee.addTask(rep.event_names.create('bidirect'), data);
-    })
+    //    .delay(timeo * 5)
+    //    .then(() => {
+    //        return ee.addTask(rep.event_names.create('bidirect'), data);
+    //    })
     //    .then((res) => {
     //        //                console.log("SETTINGS", res);
     //        var evdata = _.clone(data);
@@ -203,11 +204,11 @@ init()
     .delay(timeo)
     .then((res) => {
         console.log("BOOK RESPONSE :", res);
-        return !res ? false : ee.addTask(booker.event_names.request, {
-            db_id: res.db_id,
-            data: res.data,
-            action: 'free'
-        });
+        //        return !res ? false : ee.addTask(booker.event_names.request, {
+        //            db_id: res.db_id,
+        //            data: res.data,
+        //            action: 'free'
+        //        });
     })
     .delay(timeo)
     .then((res) => {

@@ -3,7 +3,7 @@ function (doc, meta) {
   if(parts[0] == "history"){
     var data = {};
     var ts = parseInt(parts[parts.length-1]);
-    var date = (new Date(ts)).toUTCString();
+    var date = (new Date(ts*1000)).toUTCString();
     var id = parts.slice(2,parts.length-1).join("/");
     data.resource = id;
     data.ts = date;
