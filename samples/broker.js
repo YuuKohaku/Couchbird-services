@@ -96,6 +96,7 @@ var book = function (requested, num) {
         console.log("Max attempts num reached");
         return Promise.resolve(false);
     }
+    console.log("Trying to book resource ", requested, ", attempt", num);
     return ee.addTask(booker.event_names.request, {
             db_id: requested[0],
             data: requested[1],
@@ -108,6 +109,7 @@ var book = function (requested, num) {
             }
         })
         .catch((res) => {
+            console.log("Error while trying to request the resource");
             if (res.name == "CBirdError") {
                 console.log("Unable to book this resource, please choose another one");
                 return Promise.resolve(res);
@@ -136,7 +138,8 @@ var init = Promise.coroutine(function* () {
         bucket_name: config.db.bucket_name
     });
     yield broker.init({
-        meta_tree: meta_tree
+        meta_tree: meta_tree,
+        hosts: hosts
     });
     yield booker.init({
         meta_tree: meta_tree,

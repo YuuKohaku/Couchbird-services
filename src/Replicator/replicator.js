@@ -35,7 +35,6 @@ var create_replication = function (ip, sb, dhost, db, usr, pwd) {
 }
 
 var set_settings = function (ip, usr, pwd, ref = false, settings) {
-    console.log("set SETTINGS", arguments)
     var postData = qs.stringify(settings);
     var uri = ref ? '/settings/replications/' + encodeURIComponent(ref) : '/settings/replications';
     var options = {
@@ -84,8 +83,7 @@ var remove_replication = function (ip, ref, usr, pwd) {
     return request(options);
 }
 
-
-var get_reference = function (ip, sb, dhost, db, usr, pwd) {
+var get_references = function (ip, usr, pwd) {
     var options = {
         uri: '/pools/default/remoteClusters',
         baseUrl: "http://" + [ip, 8091].join(":"),
@@ -99,16 +97,16 @@ var get_reference = function (ip, sb, dhost, db, usr, pwd) {
     return request(options)
         .then((res) => {
             var response = JSON.parse(res[1]);
-            var cluster_ref = _.filter(response, {
-                name: dhost
-            });
-            if (cluster_ref.length != 1)
-                return Promise.reject(res);
-            var ref = [cluster_ref[0].uuid, sb, db].join("/");
-            return Promise.resolve(ref);
-        })
-        .catch((err) => {
-            console.log("REF ERROR", err);
+            var cluster_ref = _.reduce(_.filter(response, {
+                deleted: false
+            }), (res, el) => {
+                //                console.log("EL", el)
+                var el_ip = el.hostname.split(":")[0];
+                res[el_ip] = el.uuid;
+                return res;
+            }, {});
+            //            console.log("CLUSTER REF", cluster_ref);
+            return Promise.resolve(cluster_ref);
         });
 }
 
@@ -164,6 +162,7 @@ class Replicator extends Abstract {
             "task-queue": true
         };
         this.rids = {};
+        this.refs = {};
         this.errname = Error.name;
 
     }
@@ -229,13 +228,23 @@ class Replicator extends Abstract {
             this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
         });
         this.hosts = config.hosts || {};
+        var promises = [];
         this.hosts.forEach((val, key) => {
             var ip = val.ip;
+            var usr = val.usr;
+            var pwd = val.pwd;
             var drop = this.getEvents("permission").dropped("ip", ip);
             var rest = this.getEvents("permission").restored("ip", ip);
             console.log("Replicator: Now watching host ", ip);
             this.emitter.on(drop, _.bind(this.inactive, this));
             this.emitter.on(rest, _.bind(this.active, this));
+            promises.push(get_references(ip, usr, pwd)
+                .then((res) => {
+                    //                    console.log("RES INIT", res);
+                    this.refs[ip] = res;
+                    return Promise.resolve(true);
+                })
+            );
             //leaving this for a better time
             //            this.addPermission("ip", ip);
         });
@@ -247,7 +256,9 @@ class Replicator extends Abstract {
         //            console.log("RESTORED:", data);
         //        });
 
-        return Promise.resolve(true);
+        return Promise.all(promises).then((res) => {
+            return Promise.resolve(true);
+        });
     }
 
     start() {
@@ -283,6 +294,15 @@ class Replicator extends Abstract {
         this.hosts.lapse(data.permission.key, true);
     }
 
+    get_reference(ip, dip, sb, db) {
+        //        console.log("GET REFERENCE ", ip, dip, sb, db, this.refs);
+        var ref = this.refs[ip][dip];
+        var rid = [ref, sb, db].join("/");
+        this.rids[[ip, sb, dip, db].join(":")] = rid;
+        //        console.log("GETREF", ref, rid);
+        return rid;
+    }
+
     get_replication_state({
         src_host: shost,
         src_bucket: sb,
@@ -298,9 +318,9 @@ class Replicator extends Abstract {
         if (!src.active || !dst.active) {
             return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
         }
-        var key = [shost, sb, dhost, db].join(":");
+        var key = [src.ip, sb, dst.ip, db].join(":");
         return new Promise((resolve, reject) => {
-                return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));
+                return resolve(this.rids[key] || this.get_reference(src.ip, dst.ip, sb, db));
             })
             .then((ref) => {
                 var refstat = [ref, stat].join("/");
@@ -329,9 +349,9 @@ class Replicator extends Abstract {
         }
 
 
-        var key = [shost, sb, dhost, db].join(":");
+        var key = [src.ip, sb, dst.ip, db].join(":");
         return new Promise((resolve, reject) => {
-                return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));
+                return resolve(this.rids[key] || this.get_reference(src.ip, dst.ip, sb, db));
             })
             .then((ref) => {
                 var promise = (_.isObject(settings)) ?
@@ -340,6 +360,7 @@ class Replicator extends Abstract {
 
                 return promise
                     .then((res) => {
+                        //                        console.log("PARSING", res[1]);
                         var response = JSON.parse(res[1]);
                         return Promise.resolve(response);
                     });
@@ -366,7 +387,7 @@ class Replicator extends Abstract {
             .then((res) => {
                 var response = JSON.parse(res[1]);
                 if (!response.errors)
-                    this.rids[[shost, sb, dhost, db].join(":")] = response.id;
+                    this.rids[[src.ip, sb, dst.ip, db].join(":")] = response.id;
                 return Promise.resolve(response);
             });
     }
@@ -386,9 +407,9 @@ class Replicator extends Abstract {
             return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
         }
 
-        var key = [shost, sb, dhost, db].join(":");
+        var key = [src.ip, sb, dst.ip, db].join(":");
         return new Promise((resolve, reject) => {
-                return resolve(this.rids[key] || get_reference(src.ip, sb, dhost, db, src.usr, src.pwd));
+                return resolve(this.rids[key] || this.get_reference(src.ip, dst.ip, sb, db));
             })
             .then((ref) => {
                 return remove_replication(src.ip, ref, src.usr, src.pwd)

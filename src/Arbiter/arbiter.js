@@ -98,7 +98,7 @@ class Arbiter extends Abstract {
             }
         ];
         _.forEach(tasks, (task) => {
-            this.emitter.on(task.name, (data) => _.bind(task.handler, this)(data));
+            this.emitter.listenTask(task.name, (data) => _.bind(task.handler, this)(data));
         });
         return Promise.resolve(true);
     }
@@ -162,9 +162,6 @@ class Arbiter extends Abstract {
                 compare(res.mst.rows, res.slv.rows);
             })
             .then((res) => {
-                return this.emitter.addTask(this.getEvents('booker').resume, {})
-            })
-            .then((res) => {
                 return this.emitter.addTask(this.getEvents('replication').resume('bidirect'), {
                     src_host: shost,
                     src_bucket: sb,
@@ -172,7 +169,7 @@ class Arbiter extends Abstract {
                     dst_bucket: mb
                 })
             })
-            .catch(err => console.log("ARB ERROR", err));;
+            //            .catch(err => console.log("ARB ERROR", err, err.stack));;
     }
 }
 

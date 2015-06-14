@@ -60,14 +60,17 @@ class Booker extends Abstract {
         this.required_permissions.restored(() => {
             if (this.state() === 'waiting') {
                 this.hosts.lapse(mip.ip, true);
-                this.emitter.emit(this.getEvents('arbiter').getup, {
-                        master: this.master,
-                        master_bucket: this.master_bucket,
-                        slave: this.slave,
-                        slave_bucket: this.slave_bucket,
-                        ts: this.paused_ts
-                    })
-                    .catch(err => console.log("BOOKER ERROR", err));
+                //                this.resume();
+                this.emitter.addTask(this.getEvents('arbiter').getup, {
+                    master: this.master,
+                    master_bucket: this.master_bucket,
+                    slave: this.slave,
+                    slave_bucket: this.slave_bucket,
+                    ts: this.paused_ts
+                }).then((res) => {
+                    this.resume();
+                    this.state('working');
+                });
             }
         });
 
