@@ -31,17 +31,31 @@ var get_history = function (ip, sb, since) {
 
 
 var compare = function (hst_m = {}, hst_s = {}) {
-    var ids_m = _.pluck(hst_m, "id");
-    var ids_s = _.pluck(hst_s, "id");
+    var index_m = _.indexBy(hst_m, "id");
+    var ids_m = _.keys(index_m, "id");
+    var index_s = _.indexBy(hst_s, "id");
+    var ids_s = _.keys(index_s, "id");
     var diff_m = _.difference(ids_m, ids_s); //ids that are present only on master
     var diff_s = _.difference(ids_s, ids_m); //ids that are present only on slave
+    var rec_m = _.chain(index_m)
+        .pick(diff_m)
+        .values()
+        .value();
+
+    var rec_s = _.chain(index_s)
+        .pick(diff_s)
+        .values()
+        .value();
+    console.log("HISTORY: ", rec_m, rec_s);
+
     //if master did something, do nothing
     if (diff_m.length > 0) {
-        console.log("HISTORY: master did something:", diff_m);
+        console.log("HISTORY: master did something:", rec_m);
     }
     //if slave did something, panic
     if (diff_s.length > 0) {
-        console.log("HISTORY: slave did something:", diff_s);
+        console.log("HISTORY: slave did something:", rec_s);
+
 
     }
 }
@@ -153,7 +167,7 @@ class Arbiter extends Abstract {
                 })
             })
             .catch((err) => {
-                console.log("ARB ERROR", err, err.stack);
+                console.log("ARB ERROR", err.stack);
                 return Promise.resolve(false)
             });;
     }

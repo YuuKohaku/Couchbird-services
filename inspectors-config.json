@@ -14,7 +14,7 @@
             "params": {
                 "permission_to_slay": "ip",
                 "key_data": "192.168.1.2",
-                "execution_time": 4000,
+                "execution_time": 10000,
                 "revive_time": 30000
             }
         }
