@@ -2108,7 +2108,7 @@ var rows = data.rows;
 var _ = require("lodash");
 var ids = _.pluck(rows, "id");
 var cb = require("Couchbird")();
-var db = cb.bucket("mt");
+var db = cb.bucket("rmt");
 
 _.forEach(ids, function (id) {
     db.remove(id).then(function (res) {

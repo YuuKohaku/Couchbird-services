@@ -22,7 +22,7 @@ var MetaTree = require("MetaTree").MetaTree;
 var meta_tree = new MetaTree({
     server_ip: "127.0.0.1",
     n1ql: "127.0.0.1:8093",
-    bucket_name: "mt",
+    bucket_name: "rmt",
     role: config.name
 });
 
@@ -75,10 +75,10 @@ ee.on('permission.restored.ip.192.168.1.2', d => console.log('restored:', d));
 var attempts = 7;
 //var requested = [];
 var data = {
-    src_host: "basilisk",
-    src_bucket: "mt",
-    dst_host: "lunar",
-    dst_bucket: "rmt",
+    src_host: "lunar",
+    src_bucket: "rmt",
+    dst_host: "basilisk",
+    dst_bucket: "mt",
     ts: _.now() / 1000
 };
 var timeo = 2000;
@@ -142,11 +142,7 @@ var init = Promise.coroutine(function* () {
     });
     yield booker.init({
         meta_tree: meta_tree,
-        hosts: hosts,
-        master: "lunar",
-        master_bucket: replica_b,
-        slave: "basilisk",
-        slave_bucket: main_b
+        hosts: hosts
     });
     yield rep.init({
         hosts: hosts
