@@ -66,6 +66,7 @@ class Booker extends Abstract {
             if (this.state() === 'waiting') {
                 this.hosts.lapse(mip.ip, true);
                 //                this.resume();
+                console.log("CALLING ARBITER with ts", this.paused_ts, ", now", _.now() / 1000);
                 this.emitter.addTask(this.getEvents('arbiter').getup, {
                     master: this.master,
                     master_bucket: this.master_bucket,
