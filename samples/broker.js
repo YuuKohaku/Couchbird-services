@@ -95,7 +95,11 @@ ee.on('permission.restored.ip.192.168.1.2', d => {
 
 //ee.listenTask('dbface.request', d => console.log("REQUEST", d));
 //ee.listenTask('dbface.response', d => console.log("RESPONSE", d));
-var book = function (requested, num) {
+var free = function (res) {
+
+}
+
+var act = function (requested, num, action) {
     if (!requested || _.isEmpty(requested)) {
         console.log("Resource info not provided");
         return Promise.resolve(false);
@@ -104,22 +108,22 @@ var book = function (requested, num) {
         console.log("Max attempts num reached");
         return Promise.resolve(false);
     }
-    console.log("Trying to book resource ", requested, ", attempt", num);
+    console.log("Trying to ", action, " resource ", requested, ", attempt", num);
     return ee.addTask(booker.event_names.request, {
             db_id: requested[0],
             data: requested[1],
-            action: 'book'
+            action: action
         })
         .then((res) => {
             if (res.success === true) {
-                console.log("Successfully booked");
+                console.log("Success", action);
                 return Promise.resolve(res);
             }
         })
         .catch((res) => {
             console.log("Error while trying to request the resource");
             if (res.name == "CBirdError") {
-                console.log("Unable to book this resource, please choose another one");
+                console.log("Unable to", action, "this resource");
                 return Promise.resolve(res);
             }
             if (res.name == booker.errname) {
@@ -130,7 +134,7 @@ var book = function (requested, num) {
             }
             return Promise.delay(book_timeo)
                 .then(() => {
-                    return book(requested, (num - 1));
+                    return act(requested, (num - 1), action);
                 });
         });
 
@@ -212,16 +216,12 @@ init()
             return res;
         }, {})));
         console.log("TAKING", requested);
-        return book(requested, attempts);
+        return act(requested, attempts, "book");
     })
     .delay(timeo)
     .then((res) => {
         console.log("BOOK RESPONSE :", res);
-        return !res ? false : ee.addTask(booker.event_names.request, {
-            db_id: res.db_id,
-            data: res.data,
-            action: 'free'
-        });
+        return act([res.db_id, res.data], attempts, "free");
     })
     .delay(timeo)
     .then((res) => {
@@ -243,16 +243,12 @@ init()
             return res;
         }, {})));
         console.log("TAKING", requested);
-        return book(requested, attempts);
+        return act(requested, attempts, "book");
     })
     .delay(timeo)
     .then((res) => {
         console.log("BOOK RESPONSE :", res);
-        return !res ? false : ee.addTask(booker.event_names.request, {
-            db_id: res.db_id,
-            data: res.data,
-            action: 'free'
-        });
+        return act([res.db_id, res.data], attempts, "free");
     })
     .delay(timeo)
     .then((res) => {
@@ -274,16 +270,12 @@ init()
             return res;
         }, {})));
         console.log("TAKING", requested);
-        return book(requested, attempts);
+        return act(requested, attempts, "book");
     })
     .delay(timeo)
     .then((res) => {
         console.log("BOOK RESPONSE :", res);
-        return !res ? false : ee.addTask(booker.event_names.request, {
-            db_id: res.db_id,
-            data: res.data,
-            action: 'free'
-        });
+        return act([res.db_id, res.data], attempts, "free");
     })
     .delay(timeo)
     .then((res) => {
