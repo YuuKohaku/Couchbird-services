@@ -315,9 +315,9 @@ class Replicator extends Abstract {
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
-        if (!src.active || !dst.active) {
-            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
-        }
+//        if (!src.active || !dst.active) {
+//            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
+//        }
         var key = [src.ip, sb, dst.ip, db].join(":");
         return new Promise((resolve, reject) => {
                 return resolve(this.rids[key] || this.get_reference(src.ip, dst.ip, sb, db));
@@ -344,9 +344,9 @@ class Replicator extends Abstract {
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
-        if (!src.active || !dst.active) {
-            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
-        }
+//        if (!src.active || !dst.active) {
+//            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
+//        }
 
 
         var key = [src.ip, sb, dst.ip, db].join(":");

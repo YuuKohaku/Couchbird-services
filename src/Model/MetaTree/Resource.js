@@ -1,7 +1,7 @@
 'use strict';
 
 var Historified = require("MetaTree").Historified;
-var Error = require("../Error/Lapsus")("MetaTree_Resource_Error");
+var Error = require("../../Error/Lapsus")("MetaTree_Resource_Error");
 var path = require("path");
 var Promise = require("bluebird");
 var _ = require("lodash");

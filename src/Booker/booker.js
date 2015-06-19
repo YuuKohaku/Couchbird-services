@@ -46,7 +46,7 @@ class Booker extends Abstract {
             this.slave_bucket = config.slave_bucket;
             if (!this.slave || !this.slave_bucket || !this.master_bucket)
                 return Promise.reject(new Error("SERVICE_ERROR", 'Specify all master-slave relations'));
-            mip = this.hosts.show(this.master);
+            this.master_stella = mip = this.hosts.show(this.master);
             if (!mip)
                 return Promise.reject(new Error("SERVICE_ERROR", 'Configure master constellation in hosts'));
             this.addPermission("ip", mip.ip);
@@ -68,15 +68,16 @@ class Booker extends Abstract {
                 //                this.resume();
                 console.log("CALLING ARBITER with ts", this.paused_ts, ", now", _.now() / 1000);
                 this.emitter.addTask(this.getEvents('arbiter').getup, {
-                    master: this.master,
-                    master_bucket: this.master_bucket,
-                    slave: this.slave,
-                    slave_bucket: this.slave_bucket,
-                    ts: this.paused_ts
-                }).then((res) => {
-                    this.start();
-                    this.state('working');
-                });
+                        master: this.master,
+                        master_bucket: this.master_bucket,
+                        slave: this.slave,
+                        slave_bucket: this.slave_bucket,
+                        ts: this.paused_ts
+                    })
+                    .then((res) => {
+                        this.start();
+                        this.state('working');
+                    });
             }
 
         });
@@ -141,7 +142,8 @@ class Booker extends Abstract {
         data: data,
         action: actname
     }) {
-        if (this.paused)
+        console.log("CALLING", actname);
+        if (this.paused || !this.master_stella.active)
             return Promise.reject(new Error("SERVICE_ERROR", "Service is paused"));
         var [type, num_id] = id.split("/");
         var mo_name = _.capitalize(type);

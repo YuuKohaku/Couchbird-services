@@ -4,11 +4,11 @@ var Promise = require('bluebird');
 var _ = require("lodash");
 var path = require("path");
 
-var Broker = require('./Broker-sample/broker');
-var Booker = require('./Booker-sample/booker');
-var Facehugger = require('./DBWorker/facehugger');
-var Replicator = require("./Replicator/replicator");
-var Arbiter = require("./Arbiter/arbiter");
+var Broker = require('./Broker/index');
+var Booker = require('./Booker/index');
+var Facehugger = require('./Facehugger/index');
+var Replicator = require("./Replicator/index");
+var Arbiter = require("./Arbiter/index");
 var Doctor = require('./Physician/physician.js');
 var Auth = require('./Auth/auth.js');
 var Queue = require('custom-queue');
@@ -68,8 +68,6 @@ auth.setChannels({
     "queue": ee
 });
 
-ee.on('permission.dropped.ip.192.168.1.2', d => console.log('dropped:', d));
-ee.on('permission.restored.ip.192.168.1.2', d => console.log('restored:', d));
 
 //INTEROP DATA
 var attempts = 7;
@@ -83,6 +81,16 @@ var data = {
 };
 var timeo = 2000;
 var book_timeo = 2000;
+
+ee.on('permission.dropped.ip.192.168.1.2', d => {
+    console.log('dropped:', d);
+    ee.addTask(rep.event_names.pause('bidirect'), data);
+})
+
+ee.on('permission.restored.ip.192.168.1.2', d => {
+    console.log('restored:', d);
+    ee.addTask(rep.event_names.resume('bidirect'), data);
+});
 
 
 //ee.listenTask('dbface.request', d => console.log("REQUEST", d));
@@ -129,7 +137,7 @@ var book = function (requested, num) {
 }
 
 var init = Promise.coroutine(function* () {
-    yield meta_tree.initModel(path.resolve(__dirname, "MTModel"));
+    yield meta_tree.initModel(path.resolve(__dirname, "Model/MetaTree"));
     yield auth.init();
     yield doctor.init(iconfig);
     yield alien.init({
@@ -197,33 +205,12 @@ init()
     .delay(timeo)
     .then((range) => {
         console.log("RESPONDED WITH", range);
-        var requested = _.sample(_.pairs(range));
-        console.log("TAKING", requested);
-        return book(requested, attempts);
-    })
-    .delay(timeo)
-    .then((res) => {
-        console.log("BOOK RESPONSE :", res);
-        //        return !res ? false : ee.addTask(booker.event_names.request, {
-        //            db_id: res.db_id,
-        //            data: res.data,
-        //            action: 'free'
-        //        });
-    })
-    .delay(timeo)
-    .then((res) => {
-        console.log("FREE RESPONSE:", res);
-    })
-    .then((res) => {
-        return ee.addTask(broker.event_names.resources, {
-            start: 1,
-            end: 8
-        });
-    })
-    .delay(timeo)
-    .then((range) => {
-        console.log("RESPONDED WITH", range);
-        var requested = _.sample(_.pairs(range));
+        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
+            if (val.value.state == "idle") {
+                res[key] = val;
+            }
+            return res;
+        }, {})));
         console.log("TAKING", requested);
         return book(requested, attempts);
     })
@@ -249,7 +236,43 @@ init()
     .delay(timeo)
     .then((range) => {
         console.log("RESPONDED WITH", range);
-        var requested = _.sample(_.pairs(range));
+        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
+            if (val.value.state == "idle") {
+                res[key] = val;
+            }
+            return res;
+        }, {})));
+        console.log("TAKING", requested);
+        return book(requested, attempts);
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("BOOK RESPONSE :", res);
+        return !res ? false : ee.addTask(booker.event_names.request, {
+            db_id: res.db_id,
+            data: res.data,
+            action: 'free'
+        });
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("FREE RESPONSE:", res);
+    })
+    .then((res) => {
+        return ee.addTask(broker.event_names.resources, {
+            start: 1,
+            end: 8
+        });
+    })
+    .delay(timeo)
+    .then((range) => {
+        console.log("RESPONDED WITH", range);
+        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
+            if (val.value.state == "idle") {
+                res[key] = val;
+            }
+            return res;
+        }, {})));
         console.log("TAKING", requested);
         return book(requested, attempts);
     })
@@ -267,9 +290,9 @@ init()
         console.log("FREE RESPONSE:", res);
     })
     .catch((err) => {
-        console.log("ERROR", err)
+        console.log("ERRORRR", err.stack)
+    })
+    //    .delay(timeo)
+    .then(() => {
+        return ee.addTask(rep.event_names.pause('bidirect'), data);
     });
-//    .delay(timeo)
-//    .then(() => {
-//        return ee.addTask(rep.event_names.remove('bidirect'), data);
-//    });
