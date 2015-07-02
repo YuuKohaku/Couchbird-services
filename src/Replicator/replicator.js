@@ -96,7 +96,10 @@ var get_references = function (ip, usr, pwd) {
 
     return request(options)
         .then((res) => {
-            var response = JSON.parse(res[1]);
+            var response = JSON.parse(res[0].toJSON().body);
+            //            console.log("CLUSTER RESPONDED", ip, _.filter(response, {
+            //                deleted: false
+            //            }));
             var cluster_ref = _.reduce(_.filter(response, {
                 deleted: false
             }), (res, el) => {
@@ -233,6 +236,7 @@ class Replicator extends Abstract {
             var ip = val.ip;
             var usr = val.usr;
             var pwd = val.pwd;
+            //TODO: onDrop, onRestore
             var drop = this.getEvents("permission").dropped("ip", ip);
             var rest = this.getEvents("permission").restored("ip", ip);
             //            console.log("Replicator: Now watching host ", ip);
@@ -244,17 +248,11 @@ class Replicator extends Abstract {
                     this.refs[ip] = res;
                     return Promise.resolve(true);
                 })
+                .catch((err) => {
+                    return Promise.resolve(false);
+                })
             );
-            //leaving this for a better time
-            //            this.addPermission("ip", ip);
         });
-
-        //        this.required_permissions.dropped((data) => {
-        //            console.log("DROPPED:", data);
-        //        });
-        //        this.required_permissions.restored((data) => {
-        //            console.log("RESTORED:", data);
-        //        });
 
         return Promise.all(promises).then((res) => {
             return Promise.resolve(true);
@@ -291,14 +289,31 @@ class Replicator extends Abstract {
     }
 
     active(data) {
-        this.hosts.lapse(data.permission.key, true);
+        var host = this.hosts.show(data.permission.key);
+        this.hosts.lapse(host.ip, true);
+        //        console.log("HOST ACTIVE", host);
+        //        if (!this.refs[host.ip]) {
+        get_references(host.ip, host.usr, host.pwd)
+            .then((res) => {
+                this.refs[host.ip] = res;
+                //                console.log("HOST", host, this.refs);
+                return Promise.resolve(true);
+            })
+            .catch((err) => {
+                return Promise.resolve(false);
+            });
+        //        }
     }
 
     get_reference(ip, dip, sb, db) {
         //        console.log("GET REFERENCE ", ip, dip, sb, db, this.refs);
-        var ref = this.refs[ip][dip];
-        var rid = [ref, sb, db].join("/");
-        this.rids[[ip, sb, dip, db].join(":")] = rid;
+        var ref = _.get(this.refs, [ip, dip]);
+        var rid = ref ? [ref, sb, db].join("/") : false;
+        //        if (!rid) {
+        //            return Promise.reject(new Error("MISCONFIGURATION", "Unable to get reference for host " + dip + " from host " + ip));
+        //        }
+        if (rid)
+            this.rids[[ip, sb, dip, db].join(":")] = rid;
         //        console.log("GETREF", ref, rid);
         return rid;
     }
@@ -315,9 +330,9 @@ class Replicator extends Abstract {
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
-//        if (!src.active || !dst.active) {
-//            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
-//        }
+        //        if (!src.active || !dst.active) {
+        //            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
+        //        }
         var key = [src.ip, sb, dst.ip, db].join(":");
         return new Promise((resolve, reject) => {
                 return resolve(this.rids[key] || this.get_reference(src.ip, dst.ip, sb, db));
@@ -326,9 +341,12 @@ class Replicator extends Abstract {
                 var refstat = [ref, stat].join("/");
                 return get_stats(src.ip, sb, src.usr, src.pwd, refstat)
                     .then((res) => {
-                        var response = JSON.parse(res[1]);
+                        var response = JSON.parse(res[0].toJSON().body);
                         return Promise.resolve(response);
                     });
+            })
+            .catch((err) => {
+                return Promise.reject(new Error("SERVICE_ERROR", "Request failed."));
             });
     }
 
@@ -344,9 +362,9 @@ class Replicator extends Abstract {
         if (!src) {
             return Promise.reject(new Error("MISCONFIGURATION", "Configure source host before you ask it for anything, dammit."));
         }
-//        if (!src.active || !dst.active) {
-//            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
-//        }
+        //        if (!src.active || !dst.active) {
+        //            return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
+        //        }
 
 
         var key = [src.ip, sb, dst.ip, db].join(":");
@@ -360,10 +378,13 @@ class Replicator extends Abstract {
 
                 return promise
                     .then((res) => {
-                        //                        console.log("PARSING", res[1]);
-                        var response = JSON.parse(res[1]);
+                        var response = JSON.parse(res[0].toJSON().body);
+                        //                        console.log("PARSING", response);
                         return Promise.resolve(response);
                     });
+            })
+            .catch((err) => {
+                return Promise.reject(new Error("SERVICE_ERROR", "Request failed."));
             });
 
     }
@@ -385,10 +406,13 @@ class Replicator extends Abstract {
 
         return create_replication(src.ip, sb, dhost, db, src.usr, src.pwd)
             .then((res) => {
-                var response = JSON.parse(res[1]);
+                var response = JSON.parse(res[0].toJSON().body);
                 if (!response.errors)
                     this.rids[[src.ip, sb, dst.ip, db].join(":")] = response.id;
                 return Promise.resolve(response);
+            })
+            .catch((err) => {
+                return Promise.reject(new Error("SERVICE_ERROR", "Request failed."));
             });
     }
 
@@ -414,9 +438,12 @@ class Replicator extends Abstract {
             .then((ref) => {
                 return remove_replication(src.ip, ref, src.usr, src.pwd)
                     .then((res) => {
-                        var response = JSON.parse(res[1]);
+                        var response = JSON.parse(res[0].toJSON().body);
                         delete this.rids[key];
                         return Promise.resolve(response);
+                    })
+                    .catch((err) => {
+                        return Promise.reject(new Error("SERVICE_ERROR", "Request failed."));
                     });
             });
     }

@@ -20,7 +20,7 @@ var get_history = function (ip, sb, since) {
 
     return request(options)
         .then((res) => {
-            var response = JSON.parse(res[1]);
+            var response = JSON.parse(res[0].toJSON().body);
             return Promise.resolve(response);
         })
         .catch((err) => {

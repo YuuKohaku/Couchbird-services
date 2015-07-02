@@ -16,7 +16,14 @@ class Constellation {
     }
 
     show(hostname) {
-        return this.list[hostname];
+        return this.list[hostname] || this.show_by_IP(hostname);
+    }
+
+    show_by_IP(ip) {
+        var stella = _.find(this.list, {
+            "ip": ip
+        });
+        return stella;
     }
 
     add(hostname, ip, credentials) {

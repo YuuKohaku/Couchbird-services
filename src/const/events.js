@@ -46,6 +46,9 @@ var events = {
             return 'permission.restored.' + name + '.' + key;
         },
         request: 'permission.request'
+    },
+    sound: {
+        compose: "sound.compose"
     }
 };
 
