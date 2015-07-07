@@ -14,7 +14,8 @@ var events = {
     booker: {
         request: "booker.request",
         pause: "booker.pause",
-        resume: "booker.resume"
+        resume: "booker.resume",
+        patch: "booker.patch"
     },
     broker: {
         resources: "broker.list.resources"

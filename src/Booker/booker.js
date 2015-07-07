@@ -94,6 +94,10 @@ class Booker extends Abstract {
             {
                 name: this.event_names.resume,
                 handler: this.resume
+            },
+            {
+                name: this.event_names.patch,
+                handler: this.patch
             }
         ];
         _.forEach(tasks, (task) => {
@@ -137,13 +141,12 @@ class Booker extends Abstract {
 
     //API
 
-    request_resource({
-        db_id: id,
-        data: data,
-        action: actname
+    patch({
+        resource: id,
+        patch: patch
     }) {
-        console.log("CALLING", actname);
-        if (this.paused || !this.master_stella.active)
+        console.log("CALLING", id, patch);
+        if (this.paused || this.master_stella && !this.master_stella.active)
             return Promise.reject(new Error("SERVICE_ERROR", "Service is paused"));
         var [type, num_id] = id.split("/");
         var mo_name = _.capitalize(type);
@@ -153,6 +156,29 @@ class Booker extends Abstract {
         var res = this.meta_tree.create(mo, {
             db_id: num_id
         });
+
+        return res.retrieve()
+            .then(() => {
+                return res.update(patch);
+            });
+    }
+
+    request_resource({
+        db_id: id,
+        data: data,
+        action: actname
+    }) {
+        if (this.paused || this.master_stella && !this.master_stella.active)
+            return Promise.reject(new Error("SERVICE_ERROR", "Service is paused"));
+        var [type, num_id] = id.split("/");
+        var mo_name = _.capitalize(type);
+        var mo = this.meta_tree[mo_name];
+        if (!mo)
+            return Promise.reject(new Error("MISCONFIGURATION", "No such class in MetaTree"));
+        var res = this.meta_tree.create(mo, {
+            db_id: num_id
+        });
+
         if (!actname || !~_.indexOf(res.exposed_api, actname))
             return Promise.reject(new Error("MISSING_METHOD"));
 

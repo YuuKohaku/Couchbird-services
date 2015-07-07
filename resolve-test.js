@@ -4,6 +4,18 @@ var hst1 = {
     "total_rows": 50,
     "rows": [
         {
+            "id": "history/replica/resource/2/1434387619",
+            "key": 1434387619,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Mon, 15 Jun 2015 17:00:18 GMT",
+                "owner": "replica",
+                "changes": {
+                    "state": "postponed"
+                }
+            }
+        },
+        {
             "id": "history/replica/resource/2/1434387618",
             "key": 1434387618,
             "value": {
@@ -14,18 +26,6 @@ var hst1 = {
                     "owner": "replica",
                     "busy": true,
                     "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/2/1434387619",
-            "key": 1434387619,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 17:00:18 GMT",
-                "owner": "replica",
-                "changes": {
-                    "state": "postponed"
                 }
             }
         },
@@ -206,6 +206,7 @@ var hst2 = {
 }
 
 var compare = function (hst_m, hst_s) {
+    var conflict = {};
     var index_m = _.indexBy(hst_m, "id");
     var ids_m = _.keys(index_m, "id");
     var index_s = _.indexBy(hst_s, "id");
@@ -222,26 +223,38 @@ var compare = function (hst_m, hst_s) {
         .pick(diff_s)
         .values()
         .value();
-    //    console.log("HISTORY: ", rec_m, rec_s);
+    console.log("HISTORY : ", rec_m, rec_s);
 
     //if master did something, do nothing
     if (diff_m.length > 0) {
-        //  console.log("HISTORY: master did something:", rec_m);
+        //        console.log("HISTORY: master did something:", rec_m);
     }
     //if slave did something, panic
     if (diff_s.length > 0) {
-        _.forEach(rec_s, function (el) {
-            var res_id = el.value.resource;
-            var related = _.find(rec_m, {
-                value: {
-                    resource: res_id
-                }
-            });
+        var byres_m = _.groupBy(rec_m, "value.resource");
+        var byres_s = _.groupBy(rec_s, "value.resource");
+        _.forEach(byres_s, function (el, res_id) {
+            var related = byres_m[res_id];
             console.log("HISTORY: related:", related);
-
+            if (related) {
+                var patch = _.chain(related)
+                    .sortBy("key")
+                    .reduce(function (acc, thg) {
+                        console.log("THG", thg)
+                        return _.assign(acc, thg.value.changes);
+                    }, {})
+                    .value();
+                conflict[res_id] = {
+                    records: el,
+                    patch: patch
+                };
+            }
         });
-        //     console.log("HISTORY: slave did something:", rec_s);
+        console.log("HISTORY: slave did something:", rec_s);
     }
+    console.log("CONFLICT : ", conflict);
+
+    return conflict;
 }
 
-compare(hst1.rows, hst2.rows)
+compare(hst1.rows, hst2.rows);

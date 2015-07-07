@@ -39,7 +39,6 @@ class Facehugger extends Abstract {
             bucket_name: "default"
         };
         _.assign(opts, config);
-
         DB_Face = Couchbird({
             server_ip: opts.server_ip,
             n1ql: opts.n1ql

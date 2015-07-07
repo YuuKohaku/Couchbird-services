@@ -11,7 +11,7 @@ var Error = require("../Error/Lapsus")("ArbiterError");
 //UTILITY
 
 var get_history = function (ip, sb, since) {
-    var uri = sb + '/_design/history_ts/_view/history_ts?stale=false&startkey=' + since;
+    var uri = sb + '/_design/history_ts/_view/history_ts?stale=false&startkey=' + Math.floor(since);
     var options = {
         uri: uri,
         baseUrl: "http://" + [ip, 8092].join(":"),
@@ -21,6 +21,7 @@ var get_history = function (ip, sb, since) {
     return request(options)
         .then((res) => {
             var response = JSON.parse(res[0].toJSON().body);
+            console.log("GOT HISTORY: ", response);
             return Promise.resolve(response);
         })
         .catch((err) => {
@@ -52,25 +53,31 @@ var compare = function (hst_m, hst_s) {
 
     //if master did something, do nothing
     if (diff_m.length > 0) {
-        //  console.log("HISTORY: master did something:", rec_m);
+        console.log("HISTORY: master did something:", rec_m);
     }
     //if slave did something, panic
     if (diff_s.length > 0) {
-        _.forEach(rec_s, function (el) {
-            var res_id = el.value.resource;
-            var related = _.find(rec_m, {
-                value: {
-                    resource: res_id
-                }
-            });
-            console.log("HISTORY: related:", related);
+        var byres_m = _.groupBy(rec_m, "value.resource");
+        var byres_s = _.groupBy(rec_s, "value.resource");
+        _.forEach(byres_s, (el, res_id) => {
+            var related = byres_m[res_id];
             if (related) {
-                conflict[el.value.resource] = conflict[el.value.resource] || [];
-                conflict[el.value.resource].push(el);
+                var patch = _.chain(related)
+                    .sortBy("key")
+                    .reduce((acc, thg) => {
+                        return _.assign(acc, thg.value.changes);
+                    }, {})
+                    .value();
+                //                patch.owner = "replica";
+                conflict[res_id] = {
+                    records: el,
+                    patch: patch
+                };
             }
         });
-        //     console.log("HISTORY: slave did something:", rec_s);
+        console.log("HISTORY: slave did something:", rec_s);
     }
+    console.log("CONFLICT : ", conflict);
     return conflict;
 }
 
@@ -155,13 +162,14 @@ class Arbiter extends Abstract {
             return Promise.reject(new Error("SERVICE_ERROR", "At least one of provided hosts is unreachable."));
         }
 
+        console.log("ARBITER: pausing replication");
         return this.emitter.addTask(this.getEvents('replication').pause('bidirect'), {
                 src_host: shost,
                 src_bucket: sb,
                 dst_host: mhost,
                 dst_bucket: mb
             })
-            .delay(this.timeout)
+            //            .delay(this.timeout)
             .then(() => {
                 return Promise.props({
                     slv: get_history(slv.ip, sb, ts),
@@ -173,7 +181,12 @@ class Arbiter extends Abstract {
                 var promises = [];
                 var conflict = compare(res.mst.rows, res.slv.rows);
                 _.forEach(conflict, (el, key) => {
-                    _.forEach(el, (record) => {
+                    var patch = this.emitter.addTask(this.getEvents('booker').patch, {
+                        resource: key,
+                        patch: el.patch
+                    });
+                    promises.push(patch);
+                    _.forEach(el.records, (record) => {
                         var new_rec = record.value;
                         new_rec.invalid = true;
                         var promise = this.emitter.addTask(this.getEvents('dbface').request, {
@@ -182,12 +195,24 @@ class Arbiter extends Abstract {
                             id: false
                         });
                         promises.push(promise);
-                        return Promise.all(promises);
                     });
+
                 });
+                return Promise.all(promises);
             })
             .then((res) => {
-                return this.emitter.addTask(this.getEvents('replication').resume('bidirect'), {
+                console.log("ARBITER: resuming replication", res);
+                return this.emitter.addTask(this.getEvents('replication').resume('direct'), {
+                    src_host: mhost,
+                    src_bucket: mb,
+                    dst_host: shost,
+                    dst_bucket: sb
+                })
+            })
+            .delay(this.timeout)
+            .then((res) => {
+                console.log("ARBITER: resuming replication", res);
+                return this.emitter.addTask(this.getEvents('replication').resume('direct'), {
                     src_host: shost,
                     src_bucket: sb,
                     dst_host: mhost,
@@ -195,7 +220,7 @@ class Arbiter extends Abstract {
                 })
             })
             .catch((err) => {
-                console.log("ARB ERROR", err.stack);
+                console.log("ARBITER ERROR", err.stack);
                 return Promise.resolve(false)
             });;
     }
