@@ -20,9 +20,9 @@ var iconfig = require('../inspectors-config.json');
 var MetaTree = require("MetaTree").MetaTree;
 
 var meta_tree = new MetaTree({
-    server_ip: "127.0.0.1",
-    n1ql: "127.0.0.1:8093",
-    bucket_name: "mt",
+    server_ip: config.db.server_ip,
+    n1ql: config.db.n1ql,
+    bucket_name: config.db.bucket_name,
     role: config.name
 });
 
@@ -73,21 +73,32 @@ auth.setChannels({
 var attempts = 7;
 //var requested = [];
 var data = {
+<<<<<<< HEAD
     src_host: "basilisk",
     src_bucket: "mt",
     dst_host: "lunar",
     dst_bucket: "rmt"
+=======
+    src_host: "lunar",
+    src_bucket: "rmt",
+    dst_host: "basilisk",
+    dst_bucket: "mt"
+>>>>>>> origin/master
 };
 var timeo = 2000;
 var book_timeo = 2000;
 
 //to imitate
+<<<<<<< HEAD
 ee.on('permission.dropped.ip.192.168.1.3', d => {
+=======
+ee.on('permission.dropped.ip.192.168.1.2', d => {
+>>>>>>> origin/master
     console.log('dropped:', d);
     ee.addTask(rep.event_names.pause('bidirect'), data);
 })
 
-ee.on('permission.restored.ip.192.168.1.3', d => {
+ee.on('permission.restored.ip.192.168.1.2', d => {
     console.log('restored:', d);
     ee.addTask(rep.event_names.resume('bidirect'), data);
 });
@@ -154,11 +165,7 @@ var init = Promise.coroutine(function* () {
     });
     yield booker.init({
         meta_tree: meta_tree,
-        hosts: hosts,
-        master: "lunar",
-        master_bucket: replica_b,
-        slave: "basilisk",
-        slave_bucket: main_b
+        hosts: hosts
     });
     yield rep.init({
         hosts: hosts
@@ -180,6 +187,7 @@ init()
         rep.tryToStart();
         arbiter.tryToStart();
     })
+<<<<<<< HEAD
     //    .then(() => {
     //        return ee.addTask(booker.event_names.patch, {
     //            resource: 'resource/8',
@@ -218,6 +226,33 @@ init()
     //            end: 8
     //        });
     //    })
+=======
+    //        .delay(timeo * 5)
+    //        .then(() => {
+    //            return ee.addTask(rep.event_names.create('bidirect'), data);
+    //        })
+    //        .then((res) => {
+    //            //                console.log("SETTINGS", res);
+    //            var evdata = _.clone(data);
+    //            evdata.settings = {
+    //                docBatchSizeKb: 512,
+    //                checkpointInterval: 10 //please, do not use this in production until you're all sure about your hardware
+    //            };
+    //            return ee.addTask(rep.event_names.settings, evdata);
+    //        })
+    //        .delay(timeo)
+    //        .then((res) => {
+    //            var evdata = _.clone(data);
+    //            evdata.stat_name = "percent_completeness";
+    //            return ee.addTask(rep.event_names.stats, evdata);
+    //        })        .delay(timeo)
+    .then((res) => {
+        return ee.addTask(broker.event_names.resources, {
+            start: 1,
+            end: 8
+        });
+    })
+>>>>>>> origin/master
     .delay(timeo)
     .then((range) => {
         console.log("RESPONDED WITH", range);
@@ -297,9 +332,18 @@ init()
         console.log("ERRORRR", err.stack)
     })
     //    .delay(timeo)
+<<<<<<< HEAD
     //    .then(() => {
     //        return ee.addTask(rep.event_names.pause('bidirect'), data);
     //    })
     //    .then((res) => {
     //        console.log("REP PAUSE:", res);
     //    });
+=======
+//    .then(() => {
+//        return ee.addTask(rep.event_names.pause('bidirect'), data);
+//    })
+//    .then((res) => {
+//        console.log("REP PAUSE:", res);
+//    });
+>>>>>>> origin/master
