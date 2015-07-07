@@ -1,55 +1,27 @@
 var data = {
-    "total_rows": 107,
+    "total_rows": 106,
     "rows": [
         {
-            "id": "history/main/resource/3/1434300963",
-            "key": 1434300963,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 16:56:03 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434300965",
-            "key": 1434300965,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 16:56:05 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/1/1434300969",
-            "key": 1434300969,
+            "id": "history/replica/resource/1/1435912269",
+            "key": 1435912269,
             "value": {
                 "resource": "resource/1",
-                "ts": "Sun, 14 Jun 2015 16:56:09 GMT",
-                "owner": "main",
+                "ts": "Fri, 03 Jul 2015 08:31:09 GMT",
+                "owner": "replica",
                 "changes": {
-                    "owner": "main",
+                    "owner": "replica",
                     "busy": true,
                     "state": "reserved"
                 }
             }
         },
         {
-            "id": "history/main/resource/1/1434300971",
-            "key": 1434300971,
+            "id": "history/replica/resource/1/1435912272",
+            "key": 1435912272,
             "value": {
                 "resource": "resource/1",
-                "ts": "Sun, 14 Jun 2015 16:56:11 GMT",
-                "owner": "main",
+                "ts": "Fri, 03 Jul 2015 08:31:12 GMT",
+                "owner": "replica",
                 "changes": {
                     "owner": null,
                     "state": "idle",
@@ -58,11 +30,39 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/5/1434300975",
-            "key": 1434300975,
+            "id": "history/replica/resource/2/1435912276",
+            "key": 1435912276,
             "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 16:56:15 GMT",
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 08:31:16 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435912278",
+            "key": 1435912278,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 08:31:18 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/8/1435912282",
+            "key": 1435912282,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 08:31:22 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -72,40 +72,40 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/5/1434300977",
-            "key": 1434300977,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 16:56:17 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434301073",
-            "key": 1434301073,
+            "id": "history/replica/resource/6/1435912282",
+            "key": 1435912282,
             "value": {
                 "resource": "resource/6",
-                "ts": "Sun, 14 Jun 2015 16:57:53 GMT",
-                "owner": "main",
+                "ts": "Fri, 03 Jul 2015 08:31:22 GMT",
+                "owner": "replica",
                 "changes": {
-                    "owner": "main",
+                    "owner": "replica",
                     "busy": true,
                     "state": "reserved"
                 }
             }
         },
         {
-            "id": "history/main/resource/6/1434301075",
-            "key": 1434301075,
+            "id": "history/main/resource/8/1435912284",
+            "key": 1435912284,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 08:31:24 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/6/1435912284",
+            "key": 1435912284,
             "value": {
                 "resource": "resource/6",
-                "ts": "Sun, 14 Jun 2015 16:57:55 GMT",
-                "owner": "main",
+                "ts": "Fri, 03 Jul 2015 08:31:24 GMT",
+                "owner": "replica",
                 "changes": {
                     "owner": null,
                     "state": "idle",
@@ -114,389 +114,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/7/1434301079",
-            "key": 1434301079,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Sun, 14 Jun 2015 16:57:59 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434301081",
-            "key": 1434301081,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Sun, 14 Jun 2015 16:58:01 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/1/1434301237",
-            "key": 1434301237,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Sun, 14 Jun 2015 17:00:37 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/1/1434301239",
-            "key": 1434301239,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Sun, 14 Jun 2015 17:00:39 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434301243",
-            "key": 1434301243,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Sun, 14 Jun 2015 17:00:43 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434301245",
-            "key": 1434301245,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Sun, 14 Jun 2015 17:00:45 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434303045",
-            "key": 1434303045,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Sun, 14 Jun 2015 17:30:45 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434303047",
-            "key": 1434303047,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Sun, 14 Jun 2015 17:30:47 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434303051",
-            "key": 1434303051,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Sun, 14 Jun 2015 17:30:51 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434303053",
-            "key": 1434303053,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Sun, 14 Jun 2015 17:30:53 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/1/1434303179",
-            "key": 1434303179,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Sun, 14 Jun 2015 17:32:59 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/1/1434303181",
-            "key": 1434303181,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Sun, 14 Jun 2015 17:33:01 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434303209",
-            "key": 1434303209,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 17:33:29 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434303211",
-            "key": 1434303211,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 17:33:31 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434303438",
-            "key": 1434303438,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Sun, 14 Jun 2015 17:37:18 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434303440",
-            "key": 1434303440,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Sun, 14 Jun 2015 17:37:20 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434303468",
-            "key": 1434303468,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 17:37:48 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434303470",
-            "key": 1434303470,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 17:37:50 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434303507",
-            "key": 1434303507,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Sun, 14 Jun 2015 17:38:27 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434303509",
-            "key": 1434303509,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Sun, 14 Jun 2015 17:38:29 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434303513",
-            "key": 1434303513,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Sun, 14 Jun 2015 17:38:33 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434303515",
-            "key": 1434303515,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Sun, 14 Jun 2015 17:38:35 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434303519",
-            "key": 1434303519,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Sun, 14 Jun 2015 17:38:39 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434303521",
-            "key": 1434303521,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Sun, 14 Jun 2015 17:38:41 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434303727",
-            "key": 1434303727,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Sun, 14 Jun 2015 17:42:07 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434303733",
-            "key": 1434303733,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 17:42:13 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434303735",
-            "key": 1434303735,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Sun, 14 Jun 2015 17:42:15 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434303739",
-            "key": 1434303739,
+            "id": "history/main/resource/3/1435912288",
+            "key": 1435912288,
             "value": {
                 "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 17:42:19 GMT",
+                "ts": "Fri, 03 Jul 2015 08:31:28 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -506,11 +128,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/3/1434303741",
-            "key": 1434303741,
+            "id": "history/main/resource/3/1435912290",
+            "key": 1435912290,
             "value": {
                 "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 17:42:21 GMT",
+                "ts": "Fri, 03 Jul 2015 08:31:30 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": null,
@@ -520,11 +142,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/8/1434303803",
-            "key": 1434303803,
+            "id": "history/main/resource/8/1435912294",
+            "key": 1435912294,
             "value": {
                 "resource": "resource/8",
-                "ts": "Sun, 14 Jun 2015 17:43:23 GMT",
+                "ts": "Fri, 03 Jul 2015 08:31:34 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -534,11 +156,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/8/1434303805",
-            "key": 1434303805,
+            "id": "history/main/resource/8/1435912296",
+            "key": 1435912296,
             "value": {
                 "resource": "resource/8",
-                "ts": "Sun, 14 Jun 2015 17:43:25 GMT",
+                "ts": "Fri, 03 Jul 2015 08:31:36 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": null,
@@ -548,11 +170,25 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/3/1434303809",
-            "key": 1434303809,
+            "id": "history/replica/resource/7/1435922528",
+            "key": 1435922528,
             "value": {
-                "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 17:43:29 GMT",
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 11:22:08 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435922530",
+            "key": 1435922530,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:22:10 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -562,11 +198,25 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/3/1434303811",
-            "key": 1434303811,
+            "id": "history/replica/resource/7/1435922530",
+            "key": 1435922530,
             "value": {
-                "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 17:43:31 GMT",
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 11:22:10 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435922532",
+            "key": 1435922532,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:22:12 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": null,
@@ -576,11 +226,67 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/3/1434304215",
-            "key": 1434304215,
+            "id": "history/replica/resource/2/1435922534",
+            "key": 1435922534,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:22:14 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435922536",
+            "key": 1435922536,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:22:16 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435922540",
+            "key": 1435922540,
             "value": {
                 "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 17:50:15 GMT",
+                "ts": "Fri, 03 Jul 2015 11:22:20 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435922542",
+            "key": 1435922542,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 11:22:22 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/7/1435922556",
+            "key": 1435922556,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 11:22:36 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -590,11 +296,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/3/1434304217",
-            "key": 1434304217,
+            "id": "history/main/resource/7/1435922558",
+            "key": 1435922558,
             "value": {
-                "resource": "resource/3",
-                "ts": "Sun, 14 Jun 2015 17:50:17 GMT",
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 11:22:38 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": null,
@@ -604,11 +310,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/6/1434304221",
-            "key": 1434304221,
+            "id": "history/main/resource/7/1435924449",
+            "key": 1435924449,
             "value": {
-                "resource": "resource/6",
-                "ts": "Sun, 14 Jun 2015 17:50:21 GMT",
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 11:54:09 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -618,375 +324,25 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/6/1434304223",
-            "key": 1434304223,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Sun, 14 Jun 2015 17:50:23 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/4/1434365955",
-            "key": 1434365955,
+            "id": "history/replica/resource/4/1435924450",
+            "key": 1435924450,
             "value": {
                 "resource": "resource/4",
-                "ts": "Mon, 15 Jun 2015 10:59:15 GMT",
-                "owner": "main",
+                "ts": "Fri, 03 Jul 2015 11:54:10 GMT",
+                "owner": "replica",
                 "changes": {
-                    "owner": "main",
+                    "owner": "replica",
                     "busy": true,
                     "state": "reserved"
                 }
             }
         },
         {
-            "id": "history/main/resource/3/1434365961",
-            "key": 1434365961,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 10:59:21 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434365963",
-            "key": 1434365963,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 10:59:23 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434365967",
-            "key": 1434365967,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 10:59:27 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434365969",
-            "key": 1434365969,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 10:59:29 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/1/1434373011",
-            "key": 1434373011,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Mon, 15 Jun 2015 12:56:51 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434373017",
-            "key": 1434373017,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 12:56:57 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434373019",
-            "key": 1434373019,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 12:56:59 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434373023",
-            "key": 1434373023,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 12:57:03 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434373025",
-            "key": 1434373025,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 12:57:05 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434373125",
-            "key": 1434373125,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 12:58:45 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434373127",
-            "key": 1434373127,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 12:58:47 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434373131",
-            "key": 1434373131,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 12:58:51 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434373133",
-            "key": 1434373133,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 12:58:53 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434375308",
-            "key": 1434375308,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 13:35:08 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434375310",
-            "key": 1434375310,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 13:35:10 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434375314",
-            "key": 1434375314,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 13:35:14 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434375316",
-            "key": 1434375316,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 13:35:16 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434375479",
-            "key": 1434375479,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 13:37:59 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434375485",
-            "key": 1434375485,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 13:38:05 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434375487",
-            "key": 1434375487,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 13:38:07 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434375491",
-            "key": 1434375491,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 13:38:11 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434375493",
-            "key": 1434375493,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 13:38:13 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434375535",
-            "key": 1434375535,
+            "id": "history/main/resource/7/1435924451",
+            "key": 1435924451,
             "value": {
                 "resource": "resource/7",
-                "ts": "Mon, 15 Jun 2015 13:38:55 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434375564",
-            "key": 1434375564,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Mon, 15 Jun 2015 13:39:24 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434375566",
-            "key": 1434375566,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Mon, 15 Jun 2015 13:39:26 GMT",
+                "ts": "Fri, 03 Jul 2015 11:54:11 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": null,
@@ -996,445 +352,11 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/7/1434376970",
-            "key": 1434376970,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Mon, 15 Jun 2015 14:02:50 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434376998",
-            "key": 1434376998,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 14:03:18 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434377000",
-            "key": 1434377000,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 14:03:20 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/5/1434380880",
-            "key": 1434380880,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Mon, 15 Jun 2015 15:08:00 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/1/1434380886",
-            "key": 1434380886,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Mon, 15 Jun 2015 15:08:06 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/1/1434380888",
-            "key": 1434380888,
-            "value": {
-                "resource": "resource/1",
-                "ts": "Mon, 15 Jun 2015 15:08:08 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/6/1434380892",
-            "key": 1434380892,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 15:08:12 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/6/1434380895",
-            "key": 1434380895,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 15:08:15 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434381021",
-            "key": 1434381021,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 15:10:21 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434381049",
-            "key": 1434381049,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 15:10:49 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434381051",
-            "key": 1434381051,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 15:10:51 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/5/1434383457",
-            "key": 1434383457,
-            "value": {
-                "resource": "resource/5",
-                "ts": "Mon, 15 Jun 2015 15:50:57 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434383485",
-            "key": 1434383485,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 15:51:25 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434383487",
-            "key": 1434383487,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 15:51:27 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/7/1434383705",
-            "key": 1434383705,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Mon, 15 Jun 2015 15:55:05 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434383733",
-            "key": 1434383733,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 15:55:33 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434383735",
-            "key": 1434383735,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 15:55:35 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/2/1434383773",
-            "key": 1434383773,
-            "value": {
-                "resource": "resource/2",
-                "ts": "Mon, 15 Jun 2015 15:56:13 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434383801",
-            "key": 1434383801,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 15:56:41 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/8/1434383803",
-            "key": 1434383803,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 15:56:43 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/3/1434384248",
-            "key": 1434384248,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 16:04:08 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434384278",
-            "key": 1434384278,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 16:04:38 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434384280",
-            "key": 1434384280,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 16:04:40 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/8/1434387078",
-            "key": 1434387078,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 16:51:18 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/3/1434387084",
-            "key": 1434387084,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 16:51:24 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/3/1434387086",
-            "key": 1434387086,
-            "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 16:51:26 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/8/1434387090",
-            "key": 1434387090,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 16:51:30 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/8/1434387092",
-            "key": 1434387092,
-            "value": {
-                "resource": "resource/8",
-                "ts": "Mon, 15 Jun 2015 16:51:32 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": null,
-                    "state": "idle",
-                    "busy": false
-                }
-            }
-        },
-        {
-            "id": "history/main/resource/6/1434387188",
-            "key": 1434387188,
-            "value": {
-                "resource": "resource/6",
-                "ts": "Mon, 15 Jun 2015 16:53:08 GMT",
-                "owner": "main",
-                "changes": {
-                    "owner": "main",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/7/1434387197",
-            "key": 1434387197,
-            "value": {
-                "resource": "resource/7",
-                "ts": "Mon, 15 Jun 2015 16:53:17 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/4/1434387203",
-            "key": 1434387203,
+            "id": "history/replica/resource/4/1435924452",
+            "key": 1435924452,
             "value": {
                 "resource": "resource/4",
-                "ts": "Mon, 15 Jun 2015 16:53:23 GMT",
-                "owner": "replica",
-                "changes": {
-                    "owner": "replica",
-                    "busy": true,
-                    "state": "reserved"
-                }
-            }
-        },
-        {
-            "id": "history/replica/resource/4/1434387205",
-            "key": 1434387205,
-            "value": {
-                "resource": "resource/4",
-                "ts": "Mon, 15 Jun 2015 16:53:25 GMT",
+                "ts": "Fri, 03 Jul 2015 11:54:12 GMT",
                 "owner": "replica",
                 "changes": {
                     "owner": null,
@@ -1444,11 +366,11 @@ var data = {
             }
         },
         {
-            "id": "history/replica/resource/3/1434387209",
-            "key": 1434387209,
+            "id": "history/replica/resource/6/1435924456",
+            "key": 1435924456,
             "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 16:53:29 GMT",
+                "resource": "resource/6",
+                "ts": "Fri, 03 Jul 2015 11:54:16 GMT",
                 "owner": "replica",
                 "changes": {
                     "owner": "replica",
@@ -1458,11 +380,11 @@ var data = {
             }
         },
         {
-            "id": "history/replica/resource/3/1434387211",
-            "key": 1434387211,
+            "id": "history/replica/resource/6/1435924458",
+            "key": 1435924458,
             "value": {
-                "resource": "resource/3",
-                "ts": "Mon, 15 Jun 2015 16:53:31 GMT",
+                "resource": "resource/6",
+                "ts": "Fri, 03 Jul 2015 11:54:18 GMT",
                 "owner": "replica",
                 "changes": {
                     "owner": null,
@@ -1472,11 +394,39 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/1/1434387216",
-            "key": 1434387216,
+            "id": "history/replica/resource/2/1435924462",
+            "key": 1435924462,
             "value": {
-                "resource": "resource/1",
-                "ts": "Mon, 15 Jun 2015 16:53:36 GMT",
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:54:22 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435924464",
+            "key": 1435924464,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:54:24 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435924475",
+            "key": 1435924475,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:54:35 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": "main",
@@ -1486,16 +436,1048 @@ var data = {
             }
         },
         {
-            "id": "history/main/resource/1/1434387218",
-            "key": 1434387218,
+            "id": "history/main/resource/2/1435924477",
+            "key": 1435924477,
             "value": {
-                "resource": "resource/1",
-                "ts": "Mon, 15 Jun 2015 16:53:38 GMT",
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 11:54:37 GMT",
                 "owner": "main",
                 "changes": {
                     "owner": null,
                     "state": "idle",
                     "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/1/1435925829",
+            "key": 1435925829,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Fri, 03 Jul 2015 12:17:09 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435925830",
+            "key": 1435925830,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 12:17:10 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/1/1435925831",
+            "key": 1435925831,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Fri, 03 Jul 2015 12:17:11 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435925832",
+            "key": 1435925832,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 12:17:12 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435925835",
+            "key": 1435925835,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 12:17:15 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435925837",
+            "key": 1435925837,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 12:17:17 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/5/1435925841",
+            "key": 1435925841,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 12:17:21 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/5/1435925843",
+            "key": 1435925843,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 12:17:23 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435925856",
+            "key": 1435925856,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 12:17:36 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435925858",
+            "key": 1435925858,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 12:17:38 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435933449",
+            "key": 1435933449,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 14:24:09 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/1/1435933450",
+            "key": 1435933450,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Fri, 03 Jul 2015 14:24:10 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435933451",
+            "key": 1435933451,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 14:24:11 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/1/1435933452",
+            "key": 1435933452,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Fri, 03 Jul 2015 14:24:12 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/8/1435933455",
+            "key": 1435933455,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 14:24:15 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/8/1435933457",
+            "key": 1435933457,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 14:24:17 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435933461",
+            "key": 1435933461,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 14:24:21 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435933463",
+            "key": 1435933463,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 14:24:23 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435933476",
+            "key": 1435933476,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 14:24:36 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435933478",
+            "key": 1435933478,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 14:24:38 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435933989",
+            "key": 1435933989,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 14:33:09 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/8/1435933989",
+            "key": 1435933989,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 14:33:09 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/2/1435933991",
+            "key": 1435933991,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 14:33:11 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/8/1435933991",
+            "key": 1435933991,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 14:33:11 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/1/1435933995",
+            "key": 1435933995,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Fri, 03 Jul 2015 14:33:15 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/1/1435933997",
+            "key": 1435933997,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Fri, 03 Jul 2015 14:33:17 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/4/1435934001",
+            "key": 1435934001,
+            "value": {
+                "resource": "resource/4",
+                "ts": "Fri, 03 Jul 2015 14:33:21 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/4/1435934003",
+            "key": 1435934003,
+            "value": {
+                "resource": "resource/4",
+                "ts": "Fri, 03 Jul 2015 14:33:23 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/7/1435934015",
+            "key": 1435934015,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 14:33:35 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/7/1435934017",
+            "key": 1435934017,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 14:33:37 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/8/1435939509",
+            "key": 1435939509,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 16:05:09 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/4/1435939510",
+            "key": 1435939510,
+            "value": {
+                "resource": "resource/4",
+                "ts": "Fri, 03 Jul 2015 16:05:10 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/8/1435939511",
+            "key": 1435939511,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 16:05:11 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/4/1435939512",
+            "key": 1435939512,
+            "value": {
+                "resource": "resource/4",
+                "ts": "Fri, 03 Jul 2015 16:05:12 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/7/1435939515",
+            "key": 1435939515,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 16:05:15 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/7/1435939517",
+            "key": 1435939517,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 16:05:17 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/7/1435939521",
+            "key": 1435939521,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 16:05:21 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/7/1435939523",
+            "key": 1435939523,
+            "value": {
+                "resource": "resource/7",
+                "ts": "Fri, 03 Jul 2015 16:05:23 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435939536",
+            "key": 1435939536,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 16:05:36 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435939538",
+            "key": 1435939538,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 16:05:38 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/6/1435939689",
+            "key": 1435939689,
+            "value": {
+                "resource": "resource/6",
+                "ts": "Fri, 03 Jul 2015 16:08:09 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/6/1435939691",
+            "key": 1435939691,
+            "value": {
+                "resource": "resource/6",
+                "ts": "Fri, 03 Jul 2015 16:08:11 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435939715",
+            "key": 1435939715,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 16:08:35 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435939717",
+            "key": 1435939717,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 16:08:37 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/8/1435941129",
+            "key": 1435941129,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 16:32:09 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435941129",
+            "key": 1435941129,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 16:32:09 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/8/1435941131",
+            "key": 1435941131,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Fri, 03 Jul 2015 16:32:11 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435941131",
+            "key": 1435941131,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 16:32:11 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435941135",
+            "key": 1435941135,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 16:32:15 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/2/1435941137",
+            "key": 1435941137,
+            "value": {
+                "resource": "resource/2",
+                "ts": "Fri, 03 Jul 2015 16:32:17 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435941141",
+            "key": 1435941141,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 16:32:21 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": "replica",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/replica/resource/3/1435941143",
+            "key": 1435941143,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Fri, 03 Jul 2015 16:32:23 GMT",
+                "owner": "replica",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435941155",
+            "key": 1435941155,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 16:32:35 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1435941157",
+            "key": 1435941157,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Fri, 03 Jul 2015 16:32:37 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436083711",
+            "key": 1436083711,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:08:31 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436083713",
+            "key": 1436083713,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:08:33 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436083717",
+            "key": 1436083717,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:08:37 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436083719",
+            "key": 1436083719,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:08:39 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/6/1436083723",
+            "key": 1436083723,
+            "value": {
+                "resource": "resource/6",
+                "ts": "Sun, 05 Jul 2015 08:08:43 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/6/1436083725",
+            "key": 1436083725,
+            "value": {
+                "resource": "resource/6",
+                "ts": "Sun, 05 Jul 2015 08:08:45 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/1/1436084671",
+            "key": 1436084671,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Sun, 05 Jul 2015 08:24:31 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/1/1436084673",
+            "key": 1436084673,
+            "value": {
+                "resource": "resource/1",
+                "ts": "Sun, 05 Jul 2015 08:24:33 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/8/1436084677",
+            "key": 1436084677,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Sun, 05 Jul 2015 08:24:37 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/8/1436084679",
+            "key": 1436084679,
+            "value": {
+                "resource": "resource/8",
+                "ts": "Sun, 05 Jul 2015 08:24:39 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436084683",
+            "key": 1436084683,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:24:43 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436084685",
+            "key": 1436084685,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:24:45 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/4/1436085271",
+            "key": 1436085271,
+            "value": {
+                "resource": "resource/4",
+                "ts": "Sun, 05 Jul 2015 08:34:31 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/4/1436085273",
+            "key": 1436085273,
+            "value": {
+                "resource": "resource/4",
+                "ts": "Sun, 05 Jul 2015 08:34:33 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1436085277",
+            "key": 1436085277,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Sun, 05 Jul 2015 08:34:37 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/5/1436085279",
+            "key": 1436085279,
+            "value": {
+                "resource": "resource/5",
+                "ts": "Sun, 05 Jul 2015 08:34:39 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436085283",
+            "key": 1436085283,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:34:43 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": "main",
+                    "busy": true,
+                    "state": "reserved"
+                }
+            }
+        },
+        {
+            "id": "history/main/resource/3/1436085285",
+            "key": 1436085285,
+            "value": {
+                "resource": "resource/3",
+                "ts": "Sun, 05 Jul 2015 08:34:45 GMT",
+                "owner": "main",
+                "changes": {
+                    "owner": null,
+                    "state": "idle",
+                    "busy": false
+                }
+            }
+        },
+        {
+            "id": "history/default/maybereq/2/1436203317",
+            "key": 1436203317,
+            "value": {
+                "resource": "maybereq/2",
+                "ts": "Mon, 06 Jul 2015 17:21:57 GMT",
+                "owner": "default",
+                "changes": {
+                    "someprop": [1, 2, 4]
+                }
+            }
+        },
+        {
+            "id": "history/default/maybereq/5/1436203317",
+            "key": 1436203317,
+            "value": {
+                "resource": "maybereq/5",
+                "ts": "Mon, 06 Jul 2015 17:21:57 GMT",
+                "owner": "default",
+                "changes": {
+                    "even": "back"
                 }
             }
         }

@@ -76,15 +76,15 @@ var data = {
     src_host: "basilisk",
     src_bucket: "mt",
     dst_host: "lunar",
-    dst_bucket: "rmt",
-    ts: _.now() / 1000
+    dst_bucket: "rmt"
 };
 var timeo = 2000;
 var book_timeo = 2000;
 
+//to imitate
 ee.on('permission.dropped.ip.192.168.1.3', d => {
     console.log('dropped:', d);
-    //    ee.addTask(rep.event_names.pause('bidirect'), data);
+    ee.addTask(rep.event_names.pause('bidirect'), data);
 })
 
 ee.on('permission.restored.ip.192.168.1.3', d => {
@@ -180,6 +180,18 @@ init()
         rep.tryToStart();
         arbiter.tryToStart();
     })
+    //    .then(() => {
+    //        return ee.addTask(booker.event_names.patch, {
+    //            resource: 'resource/8',
+    //            patch: {
+    //                state: "reserved",
+    //                owner: "replica"
+    //            }
+    //        })
+    //    })
+    //    .then((res) => {
+    //        console.log("PATCH RESPONSE :", res);
+    //    })
     //    .delay(timeo * 5)
     //    .then(() => {
     //        return ee.addTask(rep.event_names.create('bidirect'), data);
@@ -206,88 +218,88 @@ init()
     //            end: 8
     //        });
     //    })
-    //    .delay(timeo)
-    //    .then((range) => {
-    //        console.log("RESPONDED WITH", range);
-    //        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
-    //            if (val.value.state == "idle") {
-    //                res[key] = val;
-    //            }
-    //            return res;
-    //        }, {})));
-    //        console.log("TAKING", requested);
-    //        return act(requested, attempts, "book");
-    //    })
-    //    .delay(timeo)
-    //    .then((res) => {
-    //        console.log("BOOK RESPONSE :", res);
-    //        return act([res.db_id, res.data], attempts, "free");
-    //    })
-    //    .delay(timeo)
-    //    .then((res) => {
-    //        console.log("FREE RESPONSE:", res);
-    //    })
-    //    .then((res) => {
-    //        return ee.addTask(broker.event_names.resources, {
-    //            start: 1,
-    //            end: 8
-    //        });
-    //    })
-    //    .delay(timeo)
-    //    .then((range) => {
-    //        console.log("RESPONDED WITH", range);
-    //        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
-    //            if (val.value.state == "idle") {
-    //                res[key] = val;
-    //            }
-    //            return res;
-    //        }, {})));
-    //        console.log("TAKING", requested);
-    //        return act(requested, attempts, "book");
-    //    })
-    //    .delay(timeo)
-    //    .then((res) => {
-    //        console.log("BOOK RESPONSE :", res);
-    //        return act([res.db_id, res.data], attempts, "free");
-    //    })
-    //    .delay(timeo)
-    //    .then((res) => {
-    //        console.log("FREE RESPONSE:", res);
-    //    })
-    //    .then((res) => {
-    //        return ee.addTask(broker.event_names.resources, {
-    //            start: 1,
-    //            end: 8
-    //        });
-    //    })
-    //    .delay(timeo)
-    //    .then((range) => {
-    //        console.log("RESPONDED WITH", range);
-    //        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
-    //            if (val.value.state == "idle") {
-    //                res[key] = val;
-    //            }
-    //            return res;
-    //        }, {})));
-    //        console.log("TAKING", requested);
-    //        return act(requested, attempts, "book");
-    //    })
-    //    .delay(timeo)
-    //    .then((res) => {
-    //        console.log("BOOK RESPONSE :", res);
-    //        return act([res.db_id, res.data], attempts, "free");
-    //    })
-    //    .delay(timeo)
-    //    .then((res) => {
-    //        console.log("FREE RESPONSE:", res);
-    //    })
+    .delay(timeo)
+    .then((range) => {
+        console.log("RESPONDED WITH", range);
+        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
+            if (val.value.state == "idle") {
+                res[key] = val;
+            }
+            return res;
+        }, {})));
+        console.log("TAKING", requested);
+        return act(requested, attempts, "book");
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("BOOK RESPONSE :", res);
+        return act([res.db_id, res.data], attempts, "free");
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("FREE RESPONSE:", res);
+    })
+    .then((res) => {
+        return ee.addTask(broker.event_names.resources, {
+            start: 1,
+            end: 8
+        });
+    })
+    .delay(timeo)
+    .then((range) => {
+        console.log("RESPONDED WITH", range);
+        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
+            if (val.value.state == "idle") {
+                res[key] = val;
+            }
+            return res;
+        }, {})));
+        console.log("TAKING", requested);
+        return act(requested, attempts, "book");
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("BOOK RESPONSE :", res);
+        return act([res.db_id, res.data], attempts, "free");
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("FREE RESPONSE:", res);
+    })
+    .then((res) => {
+        return ee.addTask(broker.event_names.resources, {
+            start: 1,
+            end: 8
+        });
+    })
+    .delay(timeo)
+    .then((range) => {
+        console.log("RESPONDED WITH", range);
+        var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {
+            if (val.value.state == "idle") {
+                res[key] = val;
+            }
+            return res;
+        }, {})));
+        console.log("TAKING", requested);
+        return act(requested, attempts, "book");
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("BOOK RESPONSE :", res);
+        return act([res.db_id, res.data], attempts, "free");
+    })
+    .delay(timeo)
+    .then((res) => {
+        console.log("FREE RESPONSE:", res);
+    })
     .catch((err) => {
         console.log("ERRORRR", err.stack)
     })
     //    .delay(timeo)
-    .then(() => {
-        return ee.addTask(rep.event_names.pause('bidirect'), data);
-    })
-    .then((res) => {
-        console.log("REP PAUSE:", res);
-    });
+    //    .then(() => {
+    //        return ee.addTask(rep.event_names.pause('bidirect'), data);
+    //    })
+    //    .then((res) => {
+    //        console.log("REP PAUSE:", res);
+    //    });
