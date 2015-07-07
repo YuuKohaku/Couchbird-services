@@ -20,9 +20,9 @@ var iconfig = require('../inspectors-config.json');
 var MetaTree = require("MetaTree").MetaTree;
 
 var meta_tree = new MetaTree({
-    server_ip: "127.0.0.1",
-    n1ql: "127.0.0.1:8093",
-    bucket_name: "mt",
+    server_ip: config.db.server_ip,
+    n1ql: config.db.n1ql,
+    bucket_name: config.db.bucket_name,
     role: config.name
 });
 
@@ -84,12 +84,21 @@ var book_timeo = 2000;
 //to imitate
 ee.on('permission.dropped.ip.192.168.1.3', d => {
     console.log('dropped:', d);
-    ee.addTask(rep.event_names.pause('bidirect'), data);
+    //    ee.addTask(rep.event_names.pause('bidirect'), data);
 })
 
 ee.on('permission.restored.ip.192.168.1.3', d => {
     console.log('restored:', d);
-    ee.addTask(rep.event_names.resume('bidirect'), data);
+    //    ee.addTask(rep.event_names.resume('bidirect'), data);
+});
+ee.on('permission.dropped.ip.192.168.1.2', d => {
+    console.log('dropped:', d);
+    //    ee.addTask(rep.event_names.pause('bidirect'), data);
+})
+
+ee.on('permission.restored.ip.192.168.1.2', d => {
+    console.log('restored:', d);
+    //    ee.addTask(rep.event_names.resume('bidirect'), data);
 });
 
 
@@ -212,13 +221,28 @@ init()
     //        return ee.addTask(rep.event_names.stats, evdata);
     //    })
     //    .delay(timeo)
-    //    .then((res) => {
-    //        return ee.addTask(broker.event_names.resources, {
-    //            start: 1,
-    //            end: 8
-    //        });
-    //    })
+    .then((res) => {
+        return ee.addTask(broker.event_names.resources, {
+            start: 1,
+            end: 8
+        });
+    })
     .delay(timeo)
+    //    .then((range) => {
+    //        console.log("RESPONDED WITH", range);
+    //        var requested = _.pairs(_.reduce(range, (res, val, key) => {
+    //            if (val.value.state != "idle") {
+    //                res[key] = val;
+    //            }
+    //            return res;
+    //        }, {}));
+    //        var promises = [];
+    //        _.forEach(requested, (req) => {
+    //            promises.push(act(req, attempts, "free"))
+    //        })
+    //        console.log("TAKING", requested);
+    //        return Promise.all(promises);
+    //    })
     .then((range) => {
         console.log("RESPONDED WITH", range);
         var requested = _.sample(_.pairs(_.reduce(range, (res, val, key) => {

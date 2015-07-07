@@ -187,11 +187,12 @@ class Booker extends Abstract {
                 return res[actname](data);
             })
             .then((success) => {
+                data.cas = success.cas;
                 return Promise.resolve({
                     db_id: id,
                     data: data,
                     action: actname,
-                    success: success
+                    success: true
                 })
             })
             .catch((error) => {

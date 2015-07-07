@@ -211,7 +211,6 @@ class Arbiter extends Abstract {
             })
             .delay(this.timeout)
             .then((res) => {
-                console.log("ARBITER: resuming replication", res);
                 return this.emitter.addTask(this.getEvents('replication').resume('direct'), {
                     src_host: shost,
                     src_bucket: sb,

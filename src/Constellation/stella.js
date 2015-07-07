@@ -21,7 +21,7 @@ class Stella {
         this.auth = credentials;
         this.usr = creds[0];
         this.pwd = creds[1];
-        this.active = false;
+        this.active = true;
     }
 }
 
