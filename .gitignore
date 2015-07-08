@@ -1,3 +1,7 @@
 build/*
 node_modules/*
 src/const/config.js
+clean.js
+inspectors-config.json
+src/const/config.js
+samples/broker.js
